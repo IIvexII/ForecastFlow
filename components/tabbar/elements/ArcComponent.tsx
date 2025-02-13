@@ -19,7 +19,12 @@ export default function ArcComponent({ width, height }: ArchComponentProps) {
           colors={["rgba(58, 58, 103, 1)", "rgba(37, 36, 76, 0.4)"]}
         />
       </Path>
-      <Path path={archBorder} style={"stroke"} strokeWidth={0.5} color={"rgba(117, 130, 244, 0.5)"} />
+      <Path
+        path={archBorder}
+        style={"stroke"}
+        strokeWidth={0.5}
+        color={"rgba(117, 130, 244, 0.5)"}
+      />
     </Canvas>
   );
 }

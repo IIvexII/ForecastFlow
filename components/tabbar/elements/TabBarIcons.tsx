@@ -3,20 +3,23 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import MapIcon from "../icons/MapIcon";
 import ListIcon from "../icons/ListIcon";
+import TrapizoidBackground from "./TrapizoidBackground";
 
 type TabBarIconsProps = {
   className?: string;
   style?: StyleProp<ViewStyle>;
+  height: number;
 };
 
 export default function TabBarIcons(props: TabBarIconsProps) {
   return (
     <View
-      className={`absolute w-full flex-row items-center justify-between p-2 ${props.className}`}
-      style={props.style}
+      className={`absolute bottom-0 w-full flex-1 flex-row items-center justify-between ${props.className}`}
+      style={[props.style]}
     >
-      <MapIcon />
-      <ListIcon style={{ marginTop: 10 }} />
+      <MapIcon style={{ marginTop: 30 }} />
+      <TrapizoidBackground />
+      <ListIcon style={{ marginTop: 30 }} />
     </View>
   );
 }

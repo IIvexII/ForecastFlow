@@ -1,5 +1,5 @@
 {
-  "name": "ForecastFlow",
+  "name": "forecast-flow",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
@@ -19,16 +19,22 @@
     "expo-location": "^18.0.6",
     "expo-splash-screen": "^0.29.21",
     "expo-status-bar": "^2.0.1",
+    "nativewind": "^4.1.23",
     "react": "18.3.1",
     "react-native": "0.76.7",
     "react-native-gesture-handler": "^2.23.1",
     "react-native-reanimated": "^3.16.7",
     "react-native-safe-area-context": "^5.2.0",
-    "react-native-screens": "^4.6.0"
+    "react-native-screens": "^4.6.0",
+    "tailwindcss": "3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~18.3.12",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.2",
+    "prettier": "^3.5.1",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5.3.3"
   },
   "private": true

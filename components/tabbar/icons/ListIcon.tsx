@@ -8,7 +8,7 @@ type ListIconProps = {
 
 export default function ListIcon(props: ListIconProps) {
   return (
-    <Canvas style={[{ width: 30, height: 25 }, props.style]}>
+    <Canvas style={[{ width: 38, height: 25 }, props.style]}>
       <Path
         style={"fill"}
         color={"white"}

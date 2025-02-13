@@ -5,17 +5,12 @@ import TabBarIcons from "./elements/TabBarIcons";
 
 export default function WeatherTabBar() {
   const tabBarHeight = 100;
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
+
   return (
-    <View
-      style={{
-        height: tabBarHeight,
-        ...StyleSheet.absoluteFillObject,
-        top: height - tabBarHeight,
-      }}
-    >
+    <View className={`absolute bottom-0 h-[${tabBarHeight}]`}>
       <ArcComponent width={width} height={tabBarHeight} />
-      <TabBarIcons />
+      <TabBarIcons style={{ marginTop: tabBarHeight / 4 }} />
     </View>
   );
 }

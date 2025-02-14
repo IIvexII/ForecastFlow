@@ -1,4 +1,3 @@
-import { SafeAreaView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 import HomeBackground from "./components/HomeBackground";

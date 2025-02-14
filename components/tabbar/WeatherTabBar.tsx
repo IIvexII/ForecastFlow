@@ -1,5 +1,6 @@
 import React from "react";
 import { useWindowDimensions, View } from "react-native";
+
 import ArcComponent from "./elements/ArcComponent";
 import TabBarIcons from "./elements/TabBarIcons";
 

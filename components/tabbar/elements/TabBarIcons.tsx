@@ -14,12 +14,12 @@ type TabBarIconsProps = {
 export default function TabBarIcons(props: TabBarIconsProps) {
   return (
     <View
-      className={`absolute bottom-0 w-full flex-1 flex-row items-center justify-between ${props.className}`}
+      className={`absolute bottom-0 w-full flex-1 flex-row items-center justify-between px-6 ${props.className}`}
       style={[props.style]}
     >
-      <MapIcon style={{ marginTop: 30 }} />
+      <MapIcon style={{ marginTop: 26 }} />
       <TrapizoidBackground />
-      <ListIcon style={{ marginTop: 30 }} />
+      <ListIcon style={{ marginTop: 26 }} />
     </View>
   );
 }

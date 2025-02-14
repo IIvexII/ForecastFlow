@@ -16,7 +16,7 @@ export default function ArcComponent({ width, height }: ArchComponentProps) {
         <LinearGradient
           start={vec(width / 2, 0)}
           end={vec(width / 2, height)}
-          colors={["rgba(58, 58, 103, 1)", "rgba(37, 36, 76, 0.4)"]}
+          colors={["rgba(58, 58, 103, 0.3)", "rgba(37, 36, 76, 0.5)"]}
         />
       </Path>
       <Path

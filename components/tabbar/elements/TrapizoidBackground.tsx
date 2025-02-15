@@ -2,12 +2,10 @@ import React from "react";
 import { useWindowDimensions } from "react-native";
 import {
   Canvas,
-  Circle,
   FitBox,
   LinearGradient,
   Path,
   rect,
-  Shadow,
   vec,
 } from "@shopify/react-native-skia";
 import CircleButton from "./CircleButton";
@@ -34,7 +32,7 @@ export default function TrapizoidBackground() {
             <LinearGradient
               start={vec(width / 2, 0)}
               end={vec(width / 2, 100)}
-              colors={["#262C51", "#3E3F78"]}
+              colors={["#3E3F78", "#262C51"]}
             />
           </Path>
         </FitBox>

@@ -1,35 +1,33 @@
 import React from "react";
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from "react-native";
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
+import { Image, ImageBackground, StyleSheet, useWindowDimensions, View } from "react-native";
+
+import WeatherInfo from "./sections/WeatherInfo";
+import { Weather } from "../models/Weather";
 
 export default function HomeBackground() {
   const { width, height } = useWindowDimensions();
 
+  const weather: Weather = {
+    city: "San Francisco",
+    temperature: 12,
+    condition: "Mostly Clear",
+    high: 20,
+    low: 10,
+  };
+
   return (
     <View className="flex-1">
+      <WeatherInfo weather={weather} />
       {/* background gradient covering full screen  */}
       <Canvas className="flex-1">
         <Rect x={0} y={0} width={width} height={height}>
-          <LinearGradient
-            start={vec(0, 0)}
-            end={vec(width, height)}
-            colors={["#2e335a", "#1c1b33"]}
-          />
+          <LinearGradient start={vec(0, 0)} end={vec(width, height)} colors={["#2e335a", "#1c1b33"]} />
         </Rect>
       </Canvas>
 
       {/* Background Image */}
-      <ImageBackground
-        source={require("../assets/home/Background.png")}
-        resizeMode="cover"
-        className="h-full w-full"
-      >
+      <ImageBackground source={require("../assets/home/Background.png")} resizeMode="cover" className="h-full w-full">
         {/* A smoke effect on bottom */}
         <Canvas style={{ ...StyleSheet.absoluteFillObject, top: "50%" }}>
           <Rect x={0} y={0} width={width} height={height * 0.5}>

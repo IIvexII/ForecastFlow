@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import React from "react";
-import { Canvas, LinearGradient, RoundedRect, vec } from "@shopify/react-native-skia";
+import { Canvas, LinearGradient, Path, RoundedRect, vec } from "@shopify/react-native-skia";
 import { BlurView } from "expo-blur";
 
 type ForecastSheetBackgroundProps = {
@@ -10,9 +10,11 @@ type ForecastSheetBackgroundProps = {
 };
 
 export default function ForecastSheetBackground(props: ForecastSheetBackgroundProps) {
+  const borderPath = `M 0 ${props.cornerRadius} A ${props.cornerRadius} ${props.cornerRadius} 0 0 1 ${props.cornerRadius} 0 L ${props.width - props.cornerRadius} 0 A ${props.cornerRadius} ${props.cornerRadius} 0 0 1 ${props.width} ${props.cornerRadius}`;
+
   return (
     <BlurView
-      intensity={50}
+      intensity={30}
       tint="dark"
       experimentalBlurMethod="dimezisBlurView"
       style={{
@@ -27,9 +29,17 @@ export default function ForecastSheetBackground(props: ForecastSheetBackgroundPr
             start={vec(0, 0)}
             end={vec(props.width, props.height)}
             colors={["rgba(46, 51, 90, 0.26)", "rgba(28, 57, 51, 0.26)"]}
-            positions={[-4, 95]}
+            positions={[-0.04, 0.95]}
           />
         </RoundedRect>
+        <Path path={borderPath} strokeWidth={3} style={"stroke"} color={"white"}>
+          <LinearGradient
+            start={vec(props.width / 2, 0)}
+            end={vec(props.width / 2, props.cornerRadius)}
+            colors={["white", "transparent"]}
+            positions={[-0.04, 0.95]}
+          />
+        </Path>
       </Canvas>
     </BlurView>
   );

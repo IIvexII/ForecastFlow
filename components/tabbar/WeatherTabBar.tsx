@@ -9,7 +9,7 @@ export default function WeatherTabBar() {
   const { width } = useWindowDimensions();
 
   return (
-    <View className="absolute bottom-0">
+    <View className="absolute bottom-0 z-10">
       <ArcComponent width={width} height={tabBarHeight} />
       <TabBarIcons height={tabBarHeight} />
     </View>

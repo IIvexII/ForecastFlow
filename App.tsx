@@ -8,6 +8,8 @@ import WeatherTabBar from "./components/tabbar/WeatherTabBar";
 import "./styles/global.css";
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
+import ForecastSheet from "./components/sheet/ForecastSheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,10 +27,13 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaProvider onLayout={onLayoutRootView}>
-      <HomeBackground />
-      <WeatherTabBar />
-      <StatusBar style="light" />
-    </SafeAreaProvider>
+    <GestureHandlerRootView>
+      <SafeAreaProvider onLayout={onLayoutRootView}>
+        <HomeBackground />
+        <ForecastSheet />
+        <WeatherTabBar />
+        <StatusBar style="light" />
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

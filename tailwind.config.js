@@ -7,6 +7,9 @@ module.exports = {
     "components/**/**/**/*.{js,jsx,ts,tsx}",
     "components/tabbar/elements/*.{js,jsx,ts,tsx}",
     "components/tabbar/icons/*.{js,jsx,ts,tsx}",
+    "components/sections/*.{js,jsx,ts,tsx}",
+    "components/sheet/*.{js,jsx,ts,tsx}",
+
     "*.tsx",
   ],
   presets: [require("nativewind/preset")],

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { useWindowDimensions } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import ForecastSheetBackground from "./ForecastSheetBackground";
 import Seperator from "./elements/Seperator";
 import ForecastControls from "./elements/ForecastControls";
 import { hourly, weekly } from "../../data/ForecastData";
 import ForecastCapsuleList from "./elements/ForecastCapsuleList";
 import { ForecastType } from "../../models/Weather";
+import AirQualityWidget from "../widgets/AirQualityWidget";
 
 export default function ForecastSheet() {
   const { width, height } = useWindowDimensions();
@@ -33,6 +34,10 @@ export default function ForecastSheet() {
         <ForecastControls selected={forecastType} onChange={setForecastType} />
         <Seperator height={5} width={width} />
         <ForecastCapsuleList type={forecastType} forecasts={forecasts} />
+
+        <View style={{ flex: 1, marginTop: 50, paddingHorizontal: 30 }}>
+          <AirQualityWidget width={width} airQualityIndex={5} />
+        </View>
       </BottomSheetView>
     </BottomSheet>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, useWindowDimensions, StyleSheet, Image } from "react-native";
 import { Canvas, RoundedRect, Shadow } from "@shopify/react-native-skia";
+
 import { Forecast, ForecastType } from "../../../models/Weather";
 import { DEGREE_SYMBOL } from "../../../utils/constants";
 import { convertDateTo12HourFormat, convertDateToDay } from "../../../utils/date-time";
@@ -31,8 +32,8 @@ export default function ForecastCapsule(props: ForecastCapsuleProps) {
   const capsuleBgOpacity = isCurrentTime ? 1 : 0.3;
 
   // capsule configs
-  const capsuleHeight = height * 0.18;
-  const capsuleWidth = width * 0.16;
+  const capsuleHeight = 180;
+  const capsuleWidth = 80;
   const borderRadius = 40;
   const spaceY = 30;
 

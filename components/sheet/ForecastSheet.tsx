@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useWindowDimensions } from "react-native";
 import ForecastSheetBackground from "./ForecastSheetBackground";
 import Seperator from "./elements/Seperator";
 import ForecastControls from "./elements/ForecastControls";
-import ForecastCapsule from "./elements/ForecastCapsule";
-import { hourly } from "../../data/ForecastData";
+import { hourly, weekly } from "../../data/ForecastData";
 import ForecastCapsuleList from "./elements/ForecastCapsuleList";
+import { ForecastType } from "../../models/Weather";
 
 export default function ForecastSheet() {
   const { width, height } = useWindowDimensions();
+  const [forecastType, setForecastType] = useState<ForecastType>(ForecastType.Hourly);
+
+  // Bottom Sheet Configs
   const snapPoints = ["40%", "90%"];
   const firstSnapPoint = height * (parseFloat(snapPoints[0]) / 100);
   const cornerRadius = 44;
 
+  // forecast data
+  const forecasts = forecastType === ForecastType.Hourly ? hourly : weekly;
   return (
     <BottomSheet
       snapPoints={snapPoints}
@@ -25,9 +30,9 @@ export default function ForecastSheet() {
       )}
     >
       <BottomSheetView>
-        <ForecastControls />
+        <ForecastControls selected={forecastType} onChange={setForecastType} />
         <Seperator height={5} width={width} />
-        <ForecastCapsuleList forecasts={hourly} />
+        <ForecastCapsuleList type={forecastType} forecasts={forecasts} />
       </BottomSheetView>
     </BottomSheet>
   );

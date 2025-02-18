@@ -36,7 +36,7 @@ export default function ForecastSheet() {
         <ForecastCapsuleList type={forecastType} forecasts={forecasts} />
 
         <View style={{ flex: 1, marginTop: 50, paddingHorizontal: 30 }}>
-          <AirQualityWidget width={width} airQualityIndex={5} />
+          <AirQualityWidget airQualityIndex={600} />
         </View>
       </BottomSheetView>
     </BottomSheet>

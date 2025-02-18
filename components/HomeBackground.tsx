@@ -4,21 +4,37 @@ import { Image, ImageBackground, StyleSheet, useWindowDimensions, View } from "r
 
 import WeatherInfo from "./sections/WeatherInfo";
 import { Weather } from "../models/Weather";
+import { useBottomSheetPosition } from "../context/BottomSheetPosition";
+import Animated, {
+  interpolate,
+  useAnimatedReaction,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
+
+const WEATHER: Weather = {
+  city: "San Francisco",
+  temperature: 12,
+  condition: "Mostly Clear",
+  high: 20,
+  low: 10,
+};
 
 export default function HomeBackground() {
   const { width, height } = useWindowDimensions();
+  const animatedPosition = useBottomSheetPosition();
 
-  const weather: Weather = {
-    city: "San Francisco",
-    temperature: 12,
-    condition: "Mostly Clear",
-    high: 20,
-    low: 10,
-  };
+  const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
+
+  const backgroundPositionStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: interpolate(animatedPosition.value, [0, 1], [0, -height]) }],
+    };
+  });
 
   return (
     <View className="flex-1">
-      <WeatherInfo weather={weather} />
+      <WeatherInfo weather={WEATHER} />
 
       {/* background gradient covering full screen  */}
       <Canvas className="flex-1">
@@ -28,7 +44,8 @@ export default function HomeBackground() {
       </Canvas>
 
       {/* Background Image */}
-      <ImageBackground
+      <AnimatedImageBackground
+        style={[backgroundPositionStyle]}
         source={require("../assets/home/Background.png")}
         resizeMode="cover"
         className="h-full w-full"
@@ -49,7 +66,7 @@ export default function HomeBackground() {
           resizeMode="cover"
           className="absolute bottom-1/4 h-auto w-full"
         />
-      </ImageBackground>
+      </AnimatedImageBackground>
     </View>
   );
 }

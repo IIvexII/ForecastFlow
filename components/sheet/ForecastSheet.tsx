@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useWindowDimensions, View } from "react-native";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
@@ -22,22 +22,42 @@ import VisibilityWidget from "../widgets/VisibilityWidget";
 // miscs
 import { ForecastType } from "../../models/Weather";
 import { hourly, weekly } from "../../data/ForecastData";
+import { normalizePostion } from "../../utils/helpers";
+import { useBottomSheetPosition } from "../../context/BottomSheetPosition";
 
 export default function ForecastSheet() {
   const { width, height } = useWindowDimensions();
   const [forecastType, setForecastType] = useState<ForecastType>(ForecastType.Hourly);
 
   // Bottom Sheet Configs
-  const snapPoints = ["40%", "90%"];
+  const snapPoints = ["40%", "80%"];
   const firstSnapPoint = height * (parseFloat(snapPoints[0]) / 100);
+  const secondSnapPoint = height * (parseFloat(snapPoints[1]) / 100);
   const cornerRadius = 44;
 
   // forecast data
   const forecasts = forecastType === ForecastType.Hourly ? hourly : weekly;
 
+  // animation
+  const currentPosition = useSharedValue(0);
+  const animatedPosition = useBottomSheetPosition(); // change value in context
+  const minValue = useMemo(() => (height - firstSnapPoint) * 0.978, [height]);
+  const maxValue = useMemo(() => (height - secondSnapPoint) * 0.978, [height]);
+
+  useAnimatedReaction(
+    () => currentPosition.value,
+    (value) => {
+      const position = normalizePostion(minValue, maxValue, value);
+
+      // update value in context
+      animatedPosition.value = position;
+    },
+  );
+
   return (
     <BottomSheet
       snapPoints={snapPoints}
+      animatedPosition={currentPosition}
       index={0}
       handleIndicatorStyle={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
       containerStyle={{ zIndex: 1 }}

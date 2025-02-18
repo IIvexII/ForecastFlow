@@ -23,7 +23,7 @@ export default function AirQualityWidget({ airQualityIndex }: AirQualityWidgetPr
   };
 
   return (
-    <View onLayout={handleLayout}>
+    <View onLayout={handleLayout} style={{ position: "relative" }}>
       <Widget>
         <Widget.Header icon={<Entypo name="air" />} title="Air Quality Index" />
         <Widget.Body contentText={`${airQualityIndex} - ${qualityBrief}`}>

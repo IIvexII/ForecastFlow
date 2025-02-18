@@ -72,25 +72,27 @@ Widget.Header = function (props: WidgetHeaderProps) {
 };
 
 type WidgetBodyProps = {
-  contentText: string;
+  contentText?: string;
   children: React.ReactNode;
 };
 
 Widget.Body = function (props: WidgetBodyProps) {
   return (
     <View style={{ width: "100%" }}>
-      <Text
-        style={{
-          color: "#FFFFFF",
-          fontFamily: "SF-Regular",
-          fontSize: 20,
-          lineHeight: 20,
-          marginTop: 10,
-          marginBottom: 10,
-        }}
-      >
-        {props.contentText}
-      </Text>
+      {props.contentText && (
+        <Text
+          style={{
+            color: "#FFFFFF",
+            fontFamily: "SF-Regular",
+            fontSize: 20,
+            lineHeight: 20,
+            marginTop: 10,
+            marginBottom: 10,
+          }}
+        >
+          {props.contentText}
+        </Text>
+      )}
 
       {props.children}
     </View>

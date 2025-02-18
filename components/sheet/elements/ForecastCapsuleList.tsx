@@ -18,6 +18,7 @@ export default function ForecastCapsuleList(props: ForecastCapsuleListProps) {
           paddingLeft: 20,
           paddingTop: 20,
           paddingRight: 20,
+          marginBottom: 30,
           flex: 1,
           flexDirection: "row",
           justifyContent: "space-around",

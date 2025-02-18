@@ -8,10 +8,12 @@ type ProgressbarProps = {
 };
 
 export default function Progressbar(props: ProgressbarProps) {
-  const lineWidth = props.width - 50;
+  const radiusOfHandle = 6;
+  const lineWidth = props.width - 35;
   const progress = props.progress > props.total ? props.total : props.progress;
 
-  const lineHandlePosition = lineWidth * (progress / props.total);
+  let lineHandlePosition = lineWidth * (progress / props.total);
+  if (lineHandlePosition < radiusOfHandle) lineHandlePosition = radiusOfHandle;
 
   return (
     <Canvas style={{ height: 20 }}>
@@ -24,7 +26,7 @@ export default function Progressbar(props: ProgressbarProps) {
         />
       </Path>
       {/* Handle */}
-      <Circle cx={lineHandlePosition + 6} cy={6} r={6} color={"#FFFF"} />
+      <Circle cx={lineHandlePosition} cy={6} r={radiusOfHandle} color={"#FFFF"} />
     </Canvas>
   );
 }

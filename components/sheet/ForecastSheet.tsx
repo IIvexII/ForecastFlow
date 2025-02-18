@@ -1,21 +1,27 @@
 import React, { useState } from "react";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { useWindowDimensions, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import ForecastSheetBackground from "./ForecastSheetBackground";
+import { useWindowDimensions, View } from "react-native";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import { useAnimatedReaction, useSharedValue } from "react-native-reanimated";
 
+// components
 import Seperator from "./elements/Seperator";
 import ForecastControls from "./elements/ForecastControls";
-import { hourly, weekly } from "../../data/ForecastData";
+import ForecastSheetBackground from "./ForecastSheetBackground";
 import ForecastCapsuleList from "./elements/ForecastCapsuleList";
-import { ForecastType } from "../../models/Weather";
-import AirQualityWidget from "../widgets/AirQualityWidget";
+
+// Widgets
 import UVIndexWidget from "../widgets/UVIndexWidget";
-import FeelsLikeWidget from "../widgets/FeelsLikeWidget";
 import RainfallWidget from "../widgets/RainfallWidget";
 import HumidityWidget from "../widgets/HumidityWidget";
 import PressureWidget from "../widgets/PressureWidget";
+import FeelsLikeWidget from "../widgets/FeelsLikeWidget";
+import AirQualityWidget from "../widgets/AirQualityWidget";
 import VisibilityWidget from "../widgets/VisibilityWidget";
+
+// miscs
+import { ForecastType } from "../../models/Weather";
+import { hourly, weekly } from "../../data/ForecastData";
 
 export default function ForecastSheet() {
   const { width, height } = useWindowDimensions();
@@ -28,6 +34,7 @@ export default function ForecastSheet() {
 
   // forecast data
   const forecasts = forecastType === ForecastType.Hourly ? hourly : weekly;
+
   return (
     <BottomSheet
       snapPoints={snapPoints}

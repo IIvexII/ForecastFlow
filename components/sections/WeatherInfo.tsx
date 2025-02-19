@@ -1,36 +1,85 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import { DEGREE_SYMBOL } from "../../utils/constants";
 import { Weather } from "../../models/Weather";
+import { DEGREE_SYMBOL } from "../../utils/constants";
+import { StyleSheet } from "react-native";
 
-type WeatherInfoProps = {
+interface WeatherInfoProps {
   weather: Weather;
-};
+}
 
-export default function WeatherInfo(props: WeatherInfoProps) {
+const WeatherInfo: React.FC<WeatherInfoProps> = ({ weather }) => {
   const { top } = useSafeAreaInsets();
-  const { city, condition, temperature, high, low } = props.weather;
+  const { city, condition, temperature, high, low } = weather;
 
   return (
-    <View className="absolute z-[1] w-full items-center justify-center" style={{ top: top + 40 }}>
+    <View style={[styles.container, { top: top + 40 }]}>
       <View>
-        <Text className="mb-4 font-['SF-Regular'] text-4xl text-white">{city}</Text>
-        <Text className="self-center font-['SF-Thin'] text-9xl text-white">
+        <Text style={styles.cityText}>{city}</Text>
+
+        <Text style={styles.temperatureText}>
           {temperature}
           {DEGREE_SYMBOL}
         </Text>
-        <Text className="mb-2 self-center font-['SF-Semibold'] text-4xl text-white/70">{condition}</Text>
-        <View className="flex-row justify-between">
-          <Text className="text-2xl text-white">
-            H:{high} {DEGREE_SYMBOL}
+
+        <Text style={styles.conditionText}>{condition}</Text>
+
+        <View style={styles.highLowContainer}>
+          <Text style={styles.highLowText}>
+            H:{high}
+            {DEGREE_SYMBOL}
           </Text>
-          <Text className="text-2xl text-white">
-            L:{low} {DEGREE_SYMBOL}
+          <Text style={styles.highLowText}>
+            L:{low}
+            {DEGREE_SYMBOL}
           </Text>
         </View>
       </View>
     </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    zIndex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cityText: {
+    marginBottom: 16,
+    fontFamily: "SF-Regular",
+    fontSize: 36,
+    lineHeight: 36,
+    color: "white",
+  },
+  temperatureText: {
+    alignSelf: "center",
+    fontFamily: "SF-Thin",
+    fontSize: 96,
+    lineHeight: 96,
+    color: "white",
+  },
+  conditionText: {
+    marginBottom: 8,
+    alignSelf: "center",
+    fontFamily: "SF-Semibold",
+    fontSize: 36,
+    lineHeight: 36,
+    color: "rgba(255, 255, 255, 0.7)",
+  },
+  highLowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  highLowText: {
+    fontFamily: "SF-Regular",
+    fontSize: 24,
+    lineHeight: 24,
+    color: "white",
+  },
+});
+
+export default WeatherInfo;

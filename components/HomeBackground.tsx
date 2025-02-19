@@ -1,10 +1,10 @@
 import React from "react";
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
-import Animated, { Extrapolation, interpolate, useAnimatedStyle } from "react-native-reanimated";
 import { Image, ImageBackground, StyleSheet, useWindowDimensions, View } from "react-native";
+import Animated, { Extrapolation, interpolate, useAnimatedStyle } from "react-native-reanimated";
 
-import WeatherInfo from "./sections/WeatherInfo";
 import { Weather } from "../models/Weather";
+import WeatherInfo from "./sections/WeatherInfo";
 import { useBottomSheetPosition } from "../context/BottomSheetPosition";
 
 const WEATHER: Weather = {
@@ -21,33 +21,29 @@ export default function HomeBackground() {
 
   const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
 
-  const backgroundPositionStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        { translateY: interpolate(animatedPosition.value, [0, 1], [0, -height], Extrapolation.CLAMP) },
-      ],
-      opacity: interpolate(animatedPosition.value, [0, 0.5], [1, 0], Extrapolation.CLAMP),
-    };
-  });
+  const backgroundPositionStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateY: interpolate(animatedPosition.value, [0, 1], [0, -height], Extrapolation.CLAMP) },
+    ],
+    opacity: interpolate(animatedPosition.value, [0, 0.5], [1, 0], Extrapolation.CLAMP),
+  }));
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <WeatherInfo weather={WEATHER} />
 
-      <Canvas style={{ ...StyleSheet.absoluteFillObject }}>
+      <Canvas style={styles.absolute}>
         <Rect x={0} y={0} width={width} height={height}>
           <LinearGradient start={vec(0, 0)} end={vec(width, height)} colors={["#2e335a", "#1c1b33"]} />
         </Rect>
       </Canvas>
-      {/* Background Image */}
+
       <AnimatedImageBackground
-        style={[backgroundPositionStyle]}
+        style={[styles.backgroundImage, backgroundPositionStyle]}
         source={require("../assets/home/Background.png")}
         resizeMode="cover"
-        className="h-full w-full"
       >
-        {/* A smoke effect on bottom */}
-        <Canvas style={{ ...StyleSheet.absoluteFillObject, top: "50%" }}>
+        <Canvas style={styles.smokeEffect}>
           <Rect x={0} y={0} width={width} height={height * 0.5}>
             <LinearGradient
               start={vec(width / 2, 0)}
@@ -57,12 +53,37 @@ export default function HomeBackground() {
             />
           </Rect>
         </Canvas>
-        <Image
-          source={require("../assets/home/House.png")}
-          resizeMode="cover"
-          className="absolute bottom-1/4 h-auto w-full"
-        />
+        <View style={[styles.absolute, styles.container]}>
+          <Image
+            source={require("../assets/home/House.png")}
+            resizeMode="stretch"
+            style={styles.houseImage}
+          />
+        </View>
       </AnimatedImageBackground>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  absolute: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  backgroundImage: {
+    width: "100%",
+    height: "100%",
+  },
+  smokeEffect: {
+    ...StyleSheet.absoluteFillObject,
+    top: "50%",
+  },
+  houseImage: {
+    position: "absolute",
+    bottom: "20%",
+    width: "100%",
+    height: "40%",
+  },
+});

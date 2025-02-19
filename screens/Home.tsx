@@ -4,7 +4,7 @@ import ForecastSheet from "../components/sheet/ForecastSheet";
 import WeatherTabBar from "../components/tabbar/WeatherTabBar";
 import { BottomSheetPositionProvider } from "../context/BottomSheetPosition";
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
     <BottomSheetPositionProvider>
       <HomeBackground />
@@ -12,4 +12,6 @@ export default function Home() {
       <WeatherTabBar />
     </BottomSheetPositionProvider>
   );
-}
+};
+
+export default Home;

@@ -11,7 +11,7 @@ import "./styles/global.css";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function App() {
+const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
     "SF-Thin": require("./assets/fonts/SF-Pro-Display-Thin.otf"),
     "SF-Regular": require("./assets/fonts/SF-Pro-Display-Regular.otf"),
@@ -32,4 +32,6 @@ export default function App() {
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
-}
+};
+
+export default App;

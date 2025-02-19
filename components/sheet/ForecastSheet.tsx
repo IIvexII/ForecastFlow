@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from "react";
-import { ScrollView } from "react-native-gesture-handler";
-import { useWindowDimensions, View } from "react-native";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useAnimatedReaction, useSharedValue } from "react-native-reanimated";
+import { ScrollView, StyleSheet, useWindowDimensions, View } from "react-native";
 
 // components
 import Seperator from "./elements/Seperator";
@@ -25,11 +24,11 @@ import { hourly, weekly } from "../../data/ForecastData";
 import { normalizePostion } from "../../utils/helpers";
 import { useBottomSheetPosition } from "../../context/BottomSheetPosition";
 
-export default function ForecastSheet() {
+const ForecastSheet: React.FC = () => {
   const { width, height } = useWindowDimensions();
   const [forecastType, setForecastType] = useState<ForecastType>(ForecastType.Hourly);
 
-  // Bottom Sheet Configs
+  // bottom Sheet Configs
   const snapPoints = ["40%", "80%"];
   const firstSnapPoint = height * (parseFloat(snapPoints[0]) / 100);
   const secondSnapPoint = height * (parseFloat(snapPoints[1]) / 100);
@@ -59,33 +58,30 @@ export default function ForecastSheet() {
       snapPoints={snapPoints}
       animatedPosition={currentPosition}
       index={0}
-      handleIndicatorStyle={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
-      containerStyle={{ zIndex: 1 }}
+      handleIndicatorStyle={styles.handleIndicator}
+      containerStyle={styles.container}
       backgroundComponent={() => (
         <ForecastSheetBackground width={width} height={firstSnapPoint} cornerRadius={cornerRadius} />
       )}
     >
-      <BottomSheetView style={{ flex: 1 }}>
+      <BottomSheetView style={styles.bottomSheetView}>
         <View>
           <ForecastControls selected={forecastType} onChange={setForecastType} />
           <Seperator height={5} width={width} />
           <ForecastCapsuleList type={forecastType} forecasts={forecasts} />
         </View>
 
-        <ScrollView
-          scrollEnabled
-          contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 20, paddingBottom: 140 }}
-        >
+        <ScrollView scrollEnabled contentContainerStyle={styles.scrollViewContent}>
           <AirQualityWidget airQualityIndex={400} />
-          <View style={{ flex: 1, flexDirection: "row", gap: 5 }}>
+          <View style={styles.row}>
             <UVIndexWidget />
             <RainfallWidget />
           </View>
-          <View style={{ flex: 1, flexDirection: "row", gap: 5 }}>
+          <View style={styles.row}>
             <FeelsLikeWidget />
             <HumidityWidget />
           </View>
-          <View style={{ flex: 1, flexDirection: "row", gap: 5 }}>
+          <View style={styles.row}>
             <PressureWidget />
             <VisibilityWidget />
           </View>
@@ -93,4 +89,28 @@ export default function ForecastSheet() {
       </BottomSheetView>
     </BottomSheet>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  handleIndicator: {
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+  },
+  container: {
+    zIndex: 1,
+  },
+  bottomSheetView: {
+    flex: 1,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingHorizontal: 20,
+    paddingBottom: 140,
+  },
+  row: {
+    flex: 1,
+    flexDirection: "row",
+    gap: 5,
+  },
+});
+
+export default ForecastSheet;

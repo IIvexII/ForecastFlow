@@ -1,16 +1,11 @@
 import React from "react";
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
+import Animated, { Extrapolation, interpolate, useAnimatedStyle } from "react-native-reanimated";
 import { Image, ImageBackground, StyleSheet, useWindowDimensions, View } from "react-native";
 
 import WeatherInfo from "./sections/WeatherInfo";
 import { Weather } from "../models/Weather";
 import { useBottomSheetPosition } from "../context/BottomSheetPosition";
-import Animated, {
-  interpolate,
-  useAnimatedReaction,
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
 
 const WEATHER: Weather = {
   city: "San Francisco",
@@ -28,21 +23,22 @@ export default function HomeBackground() {
 
   const backgroundPositionStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: interpolate(animatedPosition.value, [0, 1], [0, -height]) }],
+      transform: [
+        { translateY: interpolate(animatedPosition.value, [0, 1], [0, -height], Extrapolation.CLAMP) },
+      ],
+      opacity: interpolate(animatedPosition.value, [0, 0.5], [1, 0], Extrapolation.CLAMP),
     };
   });
 
   return (
-    <View className="flex-1">
+    <View style={{ flex: 1 }}>
       <WeatherInfo weather={WEATHER} />
 
-      {/* background gradient covering full screen  */}
-      <Canvas className="flex-1">
+      <Canvas style={{ ...StyleSheet.absoluteFillObject }}>
         <Rect x={0} y={0} width={width} height={height}>
           <LinearGradient start={vec(0, 0)} end={vec(width, height)} colors={["#2e335a", "#1c1b33"]} />
         </Rect>
       </Canvas>
-
       {/* Background Image */}
       <AnimatedImageBackground
         style={[backgroundPositionStyle]}

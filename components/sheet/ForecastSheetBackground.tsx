@@ -2,6 +2,8 @@ import { StyleSheet } from "react-native";
 import React from "react";
 import { Canvas, LinearGradient, Path, RoundedRect, vec } from "@shopify/react-native-skia";
 import { BlurView } from "expo-blur";
+import Animated, { interpolateColor, useAnimatedStyle } from "react-native-reanimated";
+import { useBottomSheetPosition } from "../../context/BottomSheetPosition";
 
 type ForecastSheetBackgroundProps = {
   width: number;
@@ -10,18 +12,28 @@ type ForecastSheetBackgroundProps = {
 };
 
 export default function ForecastSheetBackground(props: ForecastSheetBackgroundProps) {
-  const borderPath = `M 0 ${props.cornerRadius} A ${props.cornerRadius} ${props.cornerRadius} 0 0 1 ${props.cornerRadius} 0 L ${props.width - props.cornerRadius} 0 A ${props.cornerRadius} ${props.cornerRadius} 0 0 1 ${props.width} ${props.cornerRadius}`;
+  const bottomSheetPosition = useBottomSheetPosition();
 
+  const borderPath = `M 0 ${props.cornerRadius} A ${props.cornerRadius} ${props.cornerRadius} 0 0 1 ${props.cornerRadius} 0 L ${props.width - props.cornerRadius} 0 A ${props.cornerRadius} ${props.cornerRadius} 0 0 1 ${props.width} ${props.cornerRadius}`;
+  const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
+  const blurViewAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: interpolateColor(bottomSheetPosition.value, [0, 0.1], ["transparent", "#2e335a"]),
+    };
+  });
   return (
-    <BlurView
+    <AnimatedBlurView
       intensity={30}
       tint="dark"
       experimentalBlurMethod="dimezisBlurView"
-      style={{
-        ...StyleSheet.absoluteFillObject,
-        borderRadius: props.cornerRadius,
-        overflow: "hidden",
-      }}
+      style={[
+        {
+          ...StyleSheet.absoluteFillObject,
+          borderRadius: props.cornerRadius,
+          overflow: "hidden",
+        },
+        blurViewAnimatedStyle,
+      ]}
     >
       <Canvas style={{ flex: 1 }}>
         <RoundedRect x={0} y={0} width={props.width} height={props.height} r={props.cornerRadius}>
@@ -41,6 +53,6 @@ export default function ForecastSheetBackground(props: ForecastSheetBackgroundPr
           />
         </Path>
       </Canvas>
-    </BlurView>
+    </AnimatedBlurView>
   );
 }

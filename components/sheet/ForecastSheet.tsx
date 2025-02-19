@@ -26,16 +26,12 @@ import { useBottomSheetPosition } from "../../context/BottomSheetPosition";
 
 const ForecastSheet: React.FC = () => {
   const { width, height } = useWindowDimensions();
-  const [forecastType, setForecastType] = useState<ForecastType>(ForecastType.Hourly);
 
   // bottom Sheet Configs
   const snapPoints = ["40%", "80%"];
   const firstSnapPoint = height * (parseFloat(snapPoints[0]) / 100);
   const secondSnapPoint = height * (parseFloat(snapPoints[1]) / 100);
   const cornerRadius = 44;
-
-  // forecast data
-  const forecasts = forecastType === ForecastType.Hourly ? hourly : weekly;
 
   // animation
   const currentPosition = useSharedValue(0);
@@ -66,10 +62,7 @@ const ForecastSheet: React.FC = () => {
     >
       <BottomSheetView style={styles.bottomSheetView}>
         <View>
-          <ForecastControls selected={forecastType} onChange={setForecastType} />
-          <Seperator height={5} width={width} />
-          <ForecastCapsuleList type={ForecastType.Hourly} forecasts={hourly} />
-          {/* <ForecastCapsuleList type={ForecastType.Weekly} forecasts={weekly} /> */}
+          <ForecastControls />
         </View>
 
         <ScrollView scrollEnabled contentContainerStyle={styles.scrollViewContent}>

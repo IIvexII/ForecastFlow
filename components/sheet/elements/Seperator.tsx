@@ -1,15 +1,18 @@
 import React from "react";
 import { Canvas, Line, vec } from "@shopify/react-native-skia";
+import { StyleProp, ViewStyle } from "react-native";
+import { styles } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetScrollable/BottomSheetFlashList";
 
 type SeperatorProps = {
   width: number;
   height: number;
   color?: string;
+  style: StyleProp<ViewStyle>;
 };
 
 export default function Seperator(props: SeperatorProps) {
   return (
-    <Canvas style={{ width: props.width, height: props.height }}>
+    <Canvas style={[{ width: props.width, height: props.height }, props.style]}>
       <Line
         p1={vec(0, 0)}
         p2={vec(props.width, 0)}

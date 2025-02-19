@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForecastSheetBackground;
+export default React.memo(ForecastSheetBackground);

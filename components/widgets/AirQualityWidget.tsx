@@ -12,7 +12,7 @@ type AirQualityWidgetProps = {
   airQualityIndex: number;
 };
 
-export default function AirQualityWidget({ airQualityIndex }: AirQualityWidgetProps) {
+const AirQualityWidget: React.FC<AirQualityWidgetProps> = ({ airQualityIndex }) => {
   const [widgetWidth, setWidgetWidth] = React.useState(150);
 
   const qualityBrief = getAQIBrief(airQualityIndex);
@@ -32,4 +32,6 @@ export default function AirQualityWidget({ airQualityIndex }: AirQualityWidgetPr
       </Widget>
     </View>
   );
-}
+};
+
+export default React.memo(AirQualityWidget);

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Weather } from "../../models/Weather";
 import { DEGREE_SYMBOL } from "../../utils/constants";
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     fontFamily: "SF-Semibold",
     fontSize: 36,
     lineHeight: 36,
-    color: "rgba(255, 255, 255, 0.7)",
+    color: "#FFFFFFD3",
   },
   highLowContainer: {
     flexDirection: "row",

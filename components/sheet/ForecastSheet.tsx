@@ -68,22 +68,23 @@ const ForecastSheet: React.FC = () => {
         <View>
           <ForecastControls selected={forecastType} onChange={setForecastType} />
           <Seperator height={5} width={width} />
-          <ForecastCapsuleList type={forecastType} forecasts={forecasts} />
+          <ForecastCapsuleList type={ForecastType.Hourly} forecasts={hourly} />
+          {/* <ForecastCapsuleList type={ForecastType.Weekly} forecasts={weekly} /> */}
         </View>
 
         <ScrollView scrollEnabled contentContainerStyle={styles.scrollViewContent}>
-          <AirQualityWidget airQualityIndex={400} />
+          <AirQualityWidget airQualityIndex={100} />
           <View style={styles.row}>
-            <UVIndexWidget />
-            <RainfallWidget />
+            <UVIndexWidget uvIndex={2} />
+            <RainfallWidget currentRainfall={1.6} forecastRainfall={1.8} />
           </View>
           <View style={styles.row}>
-            <FeelsLikeWidget />
-            <HumidityWidget />
+            <FeelsLikeWidget feelsLikeTemp={19} />
+            <HumidityWidget humidity={90} dewPoint={17} />
           </View>
           <View style={styles.row}>
             <PressureWidget />
-            <VisibilityWidget />
+            <VisibilityWidget visibility={10} />
           </View>
         </ScrollView>
       </BottomSheetView>
@@ -102,12 +103,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollViewContent: {
-    flexGrow: 1,
+    flex: 1,
     paddingHorizontal: 20,
-    paddingBottom: 140,
   },
   row: {
-    flex: 1,
+    // flex: 1,
     flexDirection: "row",
     gap: 5,
   },

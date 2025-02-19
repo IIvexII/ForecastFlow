@@ -4,7 +4,11 @@ import { View, Text } from "react-native";
 
 import Widget from "./base/Widget";
 
-export default function FeelsLikeWidget() {
+type FeelsLikeWidgetProps = {
+  feelsLikeTemp: number;
+};
+
+const FeelsLikeWidget: React.FC<FeelsLikeWidgetProps> = ({ feelsLikeTemp }) => {
   return (
     <View style={{ position: "relative", width: "50%" }}>
       <Widget>
@@ -12,14 +16,16 @@ export default function FeelsLikeWidget() {
         <Widget.Body>
           <View style={{ justifyContent: "space-between", height: 85 }}>
             <Text style={{ color: "white", fontFamily: "SF-Semibold", fontSize: 40, lineHeight: 40 }}>
-              19°
+              {feelsLikeTemp}°
             </Text>
             <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 16, lineHeight: 16 }}>
-              Similar to the actual temprature
+              Similar to the actual temperature
             </Text>
           </View>
         </Widget.Body>
       </Widget>
     </View>
   );
-}
+};
+
+export default React.memo(FeelsLikeWidget);

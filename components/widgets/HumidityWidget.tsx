@@ -4,7 +4,12 @@ import { View, Text } from "react-native";
 
 import Widget from "./base/Widget";
 
-export default function HumidityWidget() {
+type HumidityWidgetProps = {
+  humidity: number;
+  dewPoint: number;
+};
+
+const HumidityWidget: React.FC<HumidityWidgetProps> = ({ humidity, dewPoint }) => {
   return (
     <View style={{ position: "relative", width: "50%" }}>
       <Widget>
@@ -12,14 +17,16 @@ export default function HumidityWidget() {
         <Widget.Body>
           <View style={{ justifyContent: "space-between", height: 85 }}>
             <Text style={{ color: "white", fontFamily: "SF-Semibold", fontSize: 40, lineHeight: 40 }}>
-              90%
+              {humidity}%
             </Text>
             <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 16, lineHeight: 16 }}>
-              The dew point is 17 right now
+              The dew point is {dewPoint} right now
             </Text>
           </View>
         </Widget.Body>
       </Widget>
     </View>
   );
-}
+};
+
+export default React.memo(HumidityWidget);

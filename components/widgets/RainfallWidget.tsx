@@ -4,7 +4,12 @@ import { View, Text } from "react-native";
 
 import Widget from "./base/Widget";
 
-export default function RainfallWidget() {
+type RainfallWidgetProps = {
+  currentRainfall: number;
+  forecastRainfall: number;
+};
+
+const RainfallWidget: React.FC<RainfallWidgetProps> = ({ currentRainfall, forecastRainfall }) => {
   return (
     <View style={{ position: "relative", width: "50%" }}>
       <Widget>
@@ -12,17 +17,19 @@ export default function RainfallWidget() {
         <Widget.Body>
           <View style={{ marginBottom: 12 }}>
             <Text style={{ color: "white", fontFamily: "SF-Semibold", fontSize: 24, lineHeight: 28 }}>
-              1.8 mm
+              {currentRainfall} mm
             </Text>
             <Text style={{ color: "#ECECEC", fontFamily: "SF-Semibold", fontSize: 18, lineHeight: 28 }}>
               in last hour
             </Text>
           </View>
           <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 16, lineHeight: 16 }}>
-            1.2mm in next 24 hours
+            {forecastRainfall}mm in next 24 hours
           </Text>
         </Widget.Body>
       </Widget>
     </View>
   );
-}
+};
+
+export default React.memo(RainfallWidget);

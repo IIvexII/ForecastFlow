@@ -9,22 +9,23 @@ export interface Weather {
 }
 
 export enum WeatherType {
-  Rainy= "Rainy",
-  Windy="Windy",
-  Stormy="Stormy",
-  Clear="Clear",
-  Cloudy="Cloudy",
-  Showers="Showers",
-  Sunny="Sunny",
-  Tornado="Torando",
-  Fog = "Patchy Fog"
+  Rainy = "Rainy",
+  Windy = "Windy",
+  Stormy = "Stormy",
+  Clear = "Clear",
+  Cloudy = "Cloudy",
+  Showers = "Showers",
+  Sunny = "Sunny",
+  Tornado = "Torando",
+  Fog = "Patchy Fog",
 }
 
 export enum ForecastType {
   Hourly = "Hourly",
-  Weekly = "Weekly"
+  Weekly = "Weekly",
 }
 export interface Forecast {
+  id: string;
   date: Date;
   weather: WeatherType;
   probability: number;
@@ -43,7 +44,7 @@ export interface WeatherForecastPeriod {
   endTime: string;
   isDaytime: boolean;
   temperatureTrend: string;
-  temperature:number;
+  temperature: number;
   probabilityOfPrecipitation: WeatherValueDetail;
   dewpoint: WeatherValueDetail;
   relativeHumidity: WeatherValueDetail;
@@ -89,7 +90,7 @@ export interface WeatherPointProperties {
   forecastGridData: string;
   observationStations: string;
   forecastZone: string;
-  relativeLocation:RelativeLocation;
+  relativeLocation: RelativeLocation;
   county: string;
   fireWeatherZone: string;
   timeZone: string;
@@ -135,12 +136,11 @@ export interface GridpointData {
     };
     temperature: TimeSeriesData;
     dewpoint: TimeSeriesData;
-    minTemperature:TimeSeriesData;
-    relativeHumidity:TimeSeriesData;
-    maxTemperature:TimeSeriesData;
+    minTemperature: TimeSeriesData;
+    relativeHumidity: TimeSeriesData;
+    maxTemperature: TimeSeriesData;
     // ... other weather data layers as needed
   };
-  
 }
 
 export interface TimeSeriesData {

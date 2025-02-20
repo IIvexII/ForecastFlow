@@ -1,8 +1,8 @@
 import { Forecast, ForecastType, WeatherType } from "../models/Weather";
-
 const hour = 3600000; // one hour in milliseconds
 export const hourly: Forecast[] = [
   {
+    id: "f866c300-9e9f-4664-896f-59a5b0849500",
     date: new Date(Date.now() - hour),
     weather: WeatherType.Sunny,
     probability: 30,
@@ -14,6 +14,7 @@ export const hourly: Forecast[] = [
     icon: require("../assets/forecast/sun_rain.png"),
   },
   {
+    id: "a1b2c3d4-e5f6-4789-9012-34567890abcd",
     date: new Date(),
     weather: WeatherType.Rainy,
     probability: 0,
@@ -25,6 +26,7 @@ export const hourly: Forecast[] = [
     icon: require("../assets/forecast/rain.png"),
   },
   {
+    id: "b9876543-21fe-4dcba-9876-543210abcdef",
     date: new Date(Date.now() + hour),
     weather: WeatherType.Windy,
     probability: 0,
@@ -36,6 +38,7 @@ export const hourly: Forecast[] = [
     icon: require("../assets/forecast/rain.png"),
   },
   {
+    id: "c0123456-789d-4ef0-ba34-567890abcdef",
     date: new Date(Date.now() + hour * 2),
     weather: WeatherType.Rainy,
     probability: 0,
@@ -47,6 +50,7 @@ export const hourly: Forecast[] = [
     icon: require("../assets/forecast/rain.png"),
   },
   {
+    id: "d7890abc-def1-4234-5678-90abcdef01234",
     date: new Date(Date.now() + hour * 3),
     weather: WeatherType.Rainy,
     probability: 0,
@@ -58,6 +62,7 @@ export const hourly: Forecast[] = [
     icon: require("../assets/forecast/rain.png"),
   },
   {
+    id: "e2345678-901c-4abc-def2-34567890abcdef",
     date: new Date(Date.now() + hour * 4),
     weather: WeatherType.Rainy,
     probability: 0,
@@ -68,13 +73,13 @@ export const hourly: Forecast[] = [
     type: ForecastType.Hourly,
     icon: require("../assets/forecast/rain.png"),
   },
-  // ... add more forecasts if needed
 ];
 
 const day = 86400000; // one day in milliseconds
 
 export const weekly: Forecast[] = [
   {
+    id: "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
     date: new Date(Date.now()),
     weather: WeatherType.Rainy,
     probability: 30,
@@ -86,6 +91,7 @@ export const weekly: Forecast[] = [
     icon: require("../assets/forecast/rain.png"),
   },
   {
+    id: "2b3c4d5e-6f7a-4b8c-9d0e-2f3a4b5c6d7e",
     date: new Date(Date.now() + day),
     weather: WeatherType.Rainy,
     probability: 0,
@@ -97,6 +103,7 @@ export const weekly: Forecast[] = [
     icon: require("../assets/forecast/windy.png"),
   },
   {
+    id: "3c4d5e6f-7a8b-4c9d-0e1f-3a4b5c6d7e8f",
     date: new Date(Date.now() + day * 2),
     weather: WeatherType.Stormy,
     probability: 100,
@@ -108,6 +115,7 @@ export const weekly: Forecast[] = [
     icon: require("../assets/forecast/rain.png"),
   },
   {
+    id: "4d5e6f7a-8b9c-4d0e-1f2a-4b5c6d7e8f9a",
     date: new Date(Date.now() + day * 3),
     weather: WeatherType.Stormy,
     probability: 50,
@@ -119,6 +127,7 @@ export const weekly: Forecast[] = [
     icon: require("../assets/forecast/rain.png"),
   },
   {
+    id: "5e6f7a8b-9c0d-4e1f-2a3b-5c6d7e8f9a0b",
     date: new Date(Date.now() + day * 4),
     weather: WeatherType.Rainy,
     probability: 0,
@@ -130,6 +139,7 @@ export const weekly: Forecast[] = [
     icon: require("../assets/forecast/windy.png"),
   },
   {
+    id: "6f7a8b9c-0d1e-4f2a-3b4c-6d7e8f9a0b1c",
     date: new Date(Date.now() + day * 5),
     weather: WeatherType.Rainy,
     probability: 0,
@@ -143,6 +153,7 @@ export const weekly: Forecast[] = [
 ];
 export const ForecastList: Forecast[] = [
   {
+    id: "7a8b9c0d-1e2f-40ab-cd34-ef567890123a",
     date: new Date(Date.now()),
     weather: WeatherType.Rainy,
     probability: 0,
@@ -154,6 +165,7 @@ export const ForecastList: Forecast[] = [
     icon: require("../assets/forecast/rain_large.png"),
   },
   {
+    id: "8b9c0d1e-2f3a-41bc-de45-f678901234bc",
     date: new Date(Date.now()),
     weather: WeatherType.Windy,
     probability: 0,
@@ -165,6 +177,7 @@ export const ForecastList: Forecast[] = [
     icon: require("../assets/forecast/wind_large.png"),
   },
   {
+    id: "9c0d1e2f-3a4b-42cd-ef56-78901234bcde",
     date: new Date(Date.now()),
     weather: WeatherType.Showers,
     probability: 0,
@@ -176,6 +189,7 @@ export const ForecastList: Forecast[] = [
     icon: require("../assets/forecast/cloudy_large.png"),
   },
   {
+    id: "0d1e2f3a-4b5c-43de-f678-901234bcdef0",
     date: new Date(Date.now()),
     weather: WeatherType.Tornado,
     probability: 0,
@@ -187,6 +201,7 @@ export const ForecastList: Forecast[] = [
     icon: require("../assets/forecast/tornado_large.png"),
   },
   {
+    id: "1e2f3a4b-5c6d-44ef-7890-1234bcdef01e",
     date: new Date(Date.now()),
     weather: WeatherType.Cloudy,
     probability: 0,
@@ -198,6 +213,7 @@ export const ForecastList: Forecast[] = [
     icon: require("../assets/forecast/rain_large.png"),
   },
   {
+    id: "2f3a4b5c-6d7e-45f0-9012-34bcdef01e2f",
     date: new Date(Date.now()),
     weather: WeatherType.Rainy,
     probability: 0,

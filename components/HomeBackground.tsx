@@ -6,6 +6,7 @@ import Animated, { Extrapolation, interpolate, useAnimatedStyle } from "react-na
 import { Weather } from "../models/Weather";
 import WeatherInfo from "./sections/WeatherInfo";
 import { useBottomSheetPosition } from "../context/BottomSheetPosition";
+import GradientBackground from "./GradientBackground";
 
 const WEATHER: Weather = {
   city: "San Francisco",
@@ -32,11 +33,7 @@ export default function HomeBackground() {
     <View style={styles.container}>
       <WeatherInfo weather={WEATHER} />
 
-      <Canvas style={styles.absolute}>
-        <Rect x={0} y={0} width={width} height={height}>
-          <LinearGradient start={vec(0, 0)} end={vec(width, height)} colors={["#2e335a", "#1c1b33"]} />
-        </Rect>
-      </Canvas>
+      <GradientBackground />
 
       <AnimatedImageBackground
         style={[styles.backgroundImage, backgroundPositionStyle]}

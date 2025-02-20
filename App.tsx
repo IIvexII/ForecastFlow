@@ -8,6 +8,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Home from "./screens/Home";
 
 import "./styles/global.css";
+import RootNavigator from "./navigators/RootNavigator";
+import { NavigationContainer } from "@react-navigation/native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,7 +29,9 @@ const App: React.FC = () => {
   return (
     <GestureHandlerRootView>
       <SafeAreaProvider onLayout={onLayoutRootView}>
-        <Home />
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
         <StatusBar style="light" />
       </SafeAreaProvider>
     </GestureHandlerRootView>

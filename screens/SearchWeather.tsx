@@ -45,7 +45,7 @@ const SearchWeather = () => {
 
       <FlatList
         style={{ paddingTop: 6 }}
-        contentContainerStyle={{ gap: 20, paddingBottom: 60 }}
+        contentContainerStyle={{ gap: 40, paddingBottom: 60 }}
         data={ForecastList}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <WeatherWidget width={width} forecast={item} />}

@@ -1,6 +1,14 @@
-import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import React, { useCallback } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSpring,
+} from "react-native-reanimated";
 import { Canvas, FitBox, LinearGradient, Path, rect, Shadow, vec } from "@shopify/react-native-skia";
+
 import { Forecast } from "../../models/Weather";
 import { DEGREE_SYMBOL } from "../../utils/constants";
 
@@ -10,10 +18,37 @@ type WeatherWidgetProps = {
 };
 
 const WeatherWidget: React.FC<WeatherWidgetProps> = ({ width, forecast }) => {
+  const tiltWidget = useSharedValue(0);
+  const weatherPosition = useSharedValue(0);
+
+  const handleOnPress = useCallback(() => {
+    const newTiltValue = tiltWidget.value === 0 ? 1 : 0;
+    tiltWidget.value = withSpring(newTiltValue);
+
+    if (newTiltValue === 1) {
+      weatherPosition.value = withRepeat(withSpring(1), -1, true);
+    } else {
+      weatherPosition.value = withSpring(0);
+    }
+  }, []);
+
+  // Animated Styles
+  const widgetBackgroundAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: interpolate(tiltWidget.value, [0, 1], [0, -2]) + "deg" }],
+  }));
+
+  const widgetIconAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        scale: interpolate(weatherPosition.value, [0, 1], [1, 1.05]),
+      },
+    ],
+  }));
+
   return (
-    <View style={styles.container}>
+    <Pressable onPress={handleOnPress} style={styles.container}>
       {/* Widget Background Shape */}
-      <View style={styles.absoluteView}>
+      <Animated.View style={[styles.absoluteView, widgetBackgroundAnimatedStyle]}>
         <Canvas style={[styles.canvas, { width: width + 26 }]}>
           <FitBox src={rect(0, 0, 445, 246)} dst={rect(0, 0, width + 26, 246)}>
             <Path path="M0 82.8946C0 39.6139 0 17.9735 14.0973 6.82339C28.1945 -4.32673 49.2531 0.657543 91.3703 10.6261L376.444 78.0991C396.558 82.8599 406.615 85.2402 412.488 92.6656C418.361 100.091 418.361 110.426 418.361 131.096V163.523C418.361 189.197 418.361 202.033 410.385 210.009C402.41 217.985 389.573 217.985 363.9 217.985H54.4612C28.7879 217.985 15.9513 217.985 7.97566 210.009C0 202.033 0 189.197 0 163.523V82.8946Z">
@@ -34,7 +69,7 @@ const WeatherWidget: React.FC<WeatherWidgetProps> = ({ width, forecast }) => {
             </Path>
           </FitBox>
         </Canvas>
-      </View>
+      </Animated.View>
 
       {/* Weather Information */}
       <View style={styles.contentContainer}>
@@ -58,8 +93,8 @@ const WeatherWidget: React.FC<WeatherWidgetProps> = ({ width, forecast }) => {
         </View>
       </View>
       {/* Weather Icon */}
-      <Image source={forecast.icon} style={styles.weatherIcon} />
-    </View>
+      <Animated.Image source={forecast.icon} style={[styles.weatherIcon, widgetIconAnimatedStyle]} />
+    </Pressable>
   );
 };
 
@@ -108,10 +143,10 @@ const styles = StyleSheet.create({
   },
   weatherIcon: {
     position: "absolute",
-    top: -50,
+    top: -30,
     right: 0,
     width: 250,
-    height: 250,
+    height: 200,
   },
 });
 

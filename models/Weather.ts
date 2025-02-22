@@ -6,6 +6,13 @@ export interface Weather {
   condition: string;
   high: number;
   low: number;
+  airQualiy: number;
+  uv: number;
+  rainfall: number;
+  feelsLike: number;
+  humidity: number;
+  dewpoint: number;
+  visibility: number;
 }
 
 export enum WeatherType {
@@ -35,6 +42,8 @@ export interface Forecast {
   location: string;
   icon: ImageSourcePropType;
   type: ForecastType;
+  rainfall: number;
+  humidity: number;
 }
 
 export interface WeatherForecastPeriod {

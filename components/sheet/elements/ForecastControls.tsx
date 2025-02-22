@@ -1,17 +1,31 @@
 import React, { useCallback, useState } from "react";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
+import { SpringConfig } from "react-native-reanimated/lib/typescript/animation/springUtils";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
 import Seperator from "./Seperator";
 import { ForecastType } from "../../../models/Weather";
 import ForecastCapsuleList from "./ForecastCapsuleList";
-import { hourly, weekly } from "../../../data/ForecastData";
-import { SpringConfig } from "react-native-reanimated/lib/typescript/animation/springUtils";
+
+import { useWeather } from "../../../context/WeatherContext";
 
 export default function ForecastControls() {
   const { width } = useWindowDimensions();
   const [forecastType, setForecastType] = useState<ForecastType>(ForecastType.Hourly);
+  const {
+    weatherData: { hourly, weekly },
+  } = useWeather();
+
+  // show the hourly forecast from 2 hour ago to next 6 hours
+  const now = new Date();
+  const previous2Hour = new Date(now.getTime() - 2 * 60 * 60 * 1000);
+  const next6Hours = new Date(now.getTime() + 6 * 60 * 60 * 1000);
+
+  const hourlyForecast = hourly?.filter((forecast) => {
+    const forecastDate = new Date(forecast.date);
+    return forecastDate >= previous2Hour && forecastDate <= next6Hours;
+  });
 
   // handle on press
   const handleOnPress = useCallback((forecastType: ForecastType) => {
@@ -80,10 +94,10 @@ export default function ForecastControls() {
 
       <View style={{ flexDirection: "row" }}>
         <Animated.View style={hourlyForecastStyles}>
-          <ForecastCapsuleList type={forecastType} forecasts={hourly} />
+          <ForecastCapsuleList type={forecastType} forecasts={hourlyForecast || []} />
         </Animated.View>
         <Animated.View style={weeklyForecastStyles}>
-          <ForecastCapsuleList type={forecastType} forecasts={weekly} />
+          <ForecastCapsuleList type={forecastType} forecasts={weekly || []} />
         </Animated.View>
       </View>
     </View>

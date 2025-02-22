@@ -13,7 +13,7 @@ type AirQualityWidgetProps = {
 };
 
 const AirQualityWidget: React.FC<AirQualityWidgetProps> = ({ airQualityIndex }) => {
-  const [widgetWidth, setWidgetWidth] = React.useState(150);
+  const [widgetWidth, setWidgetWidth] = React.useState(-1);
 
   const qualityBrief = getAQIBrief(airQualityIndex);
 
@@ -26,7 +26,7 @@ const AirQualityWidget: React.FC<AirQualityWidgetProps> = ({ airQualityIndex }) 
     <View onLayout={handleLayout} style={{ position: "relative" }}>
       <Widget>
         <Widget.Header icon={<Entypo name="air" />} title="Air Quality Index" />
-        <Widget.Body contentText={`${airQualityIndex} - ${qualityBrief}`}>
+        <Widget.Body contentText={`${airQualityIndex < 0 ? 0 : airQualityIndex} - ${qualityBrief}`}>
           <Progressbar width={widgetWidth} progress={airQualityIndex} total={MAX_AIR_QUALITY_INDEX} />
         </Widget.Body>
       </Widget>

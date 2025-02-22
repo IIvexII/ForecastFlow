@@ -19,13 +19,15 @@ import AirQualityWidget from "../widgets/AirQualityWidget";
 import VisibilityWidget from "../widgets/VisibilityWidget";
 
 // miscs
-import { ForecastType } from "../../models/Weather";
-import { hourly, weekly } from "../../data/ForecastData";
 import { normalizePostion } from "../../utils/helpers";
 import { useBottomSheetPosition } from "../../context/BottomSheetPosition";
+import { useWeather } from "../../context/WeatherContext";
 
 const ForecastSheet: React.FC = () => {
   const { width, height } = useWindowDimensions();
+  const {
+    weatherData: { current, hourly },
+  } = useWeather();
 
   // bottom Sheet Configs
   const snapPoints = ["40%", "80%"];
@@ -66,18 +68,21 @@ const ForecastSheet: React.FC = () => {
         </View>
 
         <ScrollView scrollEnabled contentContainerStyle={styles.scrollViewContent}>
-          <AirQualityWidget airQualityIndex={100} />
+          <AirQualityWidget airQualityIndex={current?.airQualiy || 0} />
           <View style={styles.row}>
-            <UVIndexWidget uvIndex={2} />
-            <RainfallWidget currentRainfall={1.6} forecastRainfall={1.8} />
+            <UVIndexWidget uvIndex={current?.uv || 0} />
+            <RainfallWidget
+              currentRainfall={current?.rainfall || 0}
+              forecastRainfall={hourly?.[23].rainfall || 0}
+            />
           </View>
           <View style={styles.row}>
-            <FeelsLikeWidget feelsLikeTemp={19} />
-            <HumidityWidget humidity={90} dewPoint={17} />
+            <FeelsLikeWidget feelsLikeTemp={current?.feelsLike || 0} />
+            <HumidityWidget humidity={current?.humidity || 0} dewPoint={current?.dewpoint || 0} />
           </View>
           <View style={styles.row}>
             <PressureWidget />
-            <VisibilityWidget visibility={10} />
+            <VisibilityWidget visibility={current?.visibility || 0} />
           </View>
         </ScrollView>
       </BottomSheetView>

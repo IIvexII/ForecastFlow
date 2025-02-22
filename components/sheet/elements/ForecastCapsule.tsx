@@ -65,7 +65,7 @@ export default function ForecastCapsule(props: ForecastCapsuleProps) {
           {dateOrTime}
         </Text>
         <View>
-          <Image source={icon} width={10} height={10} />
+          <Image source={icon} style={{ width: 40, height: 40 }} />
           <Text
             style={{
               color: "#7edaff",
@@ -80,7 +80,7 @@ export default function ForecastCapsule(props: ForecastCapsuleProps) {
           </Text>
         </View>
         <Text style={{ color: "white", fontSize: 20, fontFamily: "SF-Regular", lineHeight: 26 }}>
-          {temperature}
+          {Math.round(temperature)}
           {DEGREE_SYMBOL}
         </Text>
       </View>

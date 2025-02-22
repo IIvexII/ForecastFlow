@@ -18,6 +18,7 @@ const UVIndexWidget: React.FC<UVIndexWidgetProps> = ({ uvIndex }) => {
   };
 
   const getUVLevel = (index: number) => {
+    if (index < 0) return "Unknown";
     if (index <= 2) return "Low";
     if (index <= 5) return "Moderate";
     if (index <= 7) return "High";
@@ -32,7 +33,7 @@ const UVIndexWidget: React.FC<UVIndexWidgetProps> = ({ uvIndex }) => {
         <Widget.Body>
           <View style={{ marginBottom: 8 }}>
             <Text style={{ color: "white", fontFamily: "SF-Semibold", fontSize: 22, lineHeight: 26 }}>
-              {uvIndex}
+              {uvIndex < 0 ? "-" : uvIndex}
             </Text>
             <Text style={{ color: "#ECECEC", fontFamily: "SF-Semibold", fontSize: 22, lineHeight: 30 }}>
               {getUVLevel(uvIndex)}

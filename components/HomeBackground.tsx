@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Canvas, LinearGradient, Rect, vec } from "@shopify/react-native-skia";
 import { Image, ImageBackground, StyleSheet, useWindowDimensions, View } from "react-native";
 import Animated, { Extrapolation, interpolate, useAnimatedStyle } from "react-native-reanimated";
@@ -7,21 +7,27 @@ import { Weather } from "../models/Weather";
 import WeatherInfo from "./sections/WeatherInfo";
 import { useBottomSheetPosition } from "../context/BottomSheetPosition";
 import GradientBackground from "./GradientBackground";
+import { fetchWeather } from "../services/weatherService";
+import { useWeather } from "../context/WeatherContext";
 
-const WEATHER: Weather = {
-  city: "San Francisco",
-  temperature: 12,
-  condition: "Mostly Clear",
-  high: 20,
-  low: 10,
+const defaultWeather: Weather = {
+  city: "",
+  temperature: 0,
+  condition: "",
+  high: 0,
+  low: 0,
 };
 
 export default function HomeBackground() {
   const { width, height } = useWindowDimensions();
   const animatedPosition = useBottomSheetPosition();
 
-  const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
+  const {
+    weatherData: { current },
+  } = useWeather();
 
+  // animation for background
+  const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
   const backgroundPositionStyle = useAnimatedStyle(() => ({
     transform: [
       { translateY: interpolate(animatedPosition.value, [0, 1], [0, -height], Extrapolation.CLAMP) },
@@ -31,7 +37,7 @@ export default function HomeBackground() {
 
   return (
     <View style={styles.container}>
-      <WeatherInfo weather={WEATHER} />
+      <WeatherInfo weather={current || defaultWeather} />
 
       <GradientBackground />
 

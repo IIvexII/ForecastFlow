@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import { SpringConfig } from "react-native-reanimated/lib/typescript/animation/springUtils";
@@ -74,6 +74,12 @@ export default function ForecastControls() {
       weeklyTranslateX.value = withSpring(-width, animationConfig);
     }
   }, []);
+
+  // initial animation
+  useEffect(() => {
+    animate(ForecastType.Hourly);
+    setForecastType(ForecastType.Hourly);
+  }, [animate]);
 
   return (
     <View>

@@ -18,14 +18,14 @@ export const fetchWeather = async (city: string) => {
 
   const current: Weather = {
     city: weatherData.location.name,
-    temperature: weatherData.current.temp_c,
+    temperature: Math.round(weatherData.current.temp_c),
     condition: weatherData.current.condition.text,
-    high: weatherData.forecast.forecastday[0].day.maxtemp_c, // Today's high
-    low: weatherData.forecast.forecastday[0].day.mintemp_c, // Today's low
+    high: Math.round(weatherData.forecast.forecastday[0].day.maxtemp_c), // Today's high
+    low: Math.round(weatherData.forecast.forecastday[0].day.mintemp_c), // Today's low
     airQualiy: weatherData.current.air_quality?.["us-epa-index"], // Optional chaining
     uv: weatherData.current.uv,
     rainfall: weatherData.current.precip_mm,
-    feelsLike: weatherData.current.feelslike_c,
+    feelsLike: Math.round(weatherData.current.feelslike_c),
     humidity: weatherData.current.humidity,
     dewpoint: weatherData.current.dewpoint_c,
     visibility: weatherData.current.vis_km,

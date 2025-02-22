@@ -6,6 +6,9 @@ import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from "react-native"
 import MapIcon from "../icons/MapIcon";
 import ListIcon from "../icons/ListIcon";
 import TrapizoidBackground from "./TrapizoidBackground";
+import { getCurrentLocation } from "../../../services/locationService";
+import { useWeather } from "../../../context/WeatherContext";
+import { fetchWeather } from "../../../services/weatherService";
 
 type TabBarIconsProps = {
   style?: StyleProp<ViewStyle>;
@@ -14,12 +17,25 @@ type TabBarIconsProps = {
 
 const TabBarIcons = React.memo((props: TabBarIconsProps) => {
   const navigation = useNavigation<NativeStackScreenProps<RootStackParamList>["navigation"]>();
+  const { setWeatherData } = useWeather();
+
+  const handleLocationPress = async () => {
+    try {
+      const location = await getCurrentLocation();
+      const weather = await fetchWeather(`${location.latitude},${location.longitude}`);
+      setWeatherData(weather);
+    } catch (error) {
+      console.error("Error getting current location:", error);
+    }
+  };
 
   return (
     <View style={[styles.container, props.style]}>
-      <MapIcon style={styles.icon} />
+      <Pressable onPress={handleLocationPress} hitSlop={10}>
+        <MapIcon style={styles.icon} />
+      </Pressable>
       <TrapizoidBackground />
-      <Pressable onPress={() => navigation.navigate("Search")}>
+      <Pressable onPress={() => navigation.navigate("Search")} hitSlop={20}>
         <ListIcon style={styles.icon} />
       </Pressable>
     </View>

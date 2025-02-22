@@ -24,7 +24,6 @@ export const getCurrentLocation = async () => {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
     };
-    console.log("Current location:", location);
 
     return location;
   } catch (error) {

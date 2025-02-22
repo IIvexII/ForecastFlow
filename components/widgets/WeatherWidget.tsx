@@ -93,7 +93,11 @@ const WeatherWidget: React.FC<WeatherWidgetProps> = ({ width, forecast }) => {
         </View>
       </View>
       {/* Weather Icon */}
-      <Animated.Image source={forecast.icon} style={[styles.weatherIcon, widgetIconAnimatedStyle]} />
+      <Animated.Image
+        source={forecast.icon}
+        resizeMode={"contain"}
+        style={[styles.weatherIcon, widgetIconAnimatedStyle]}
+      />
     </Pressable>
   );
 };

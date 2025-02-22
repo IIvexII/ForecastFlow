@@ -17,6 +17,8 @@ const GradientBackground: React.FC = () => {
 const styles = StyleSheet.create({
   absolute: {
     ...StyleSheet.absoluteFillObject,
+    width: "100%",
+    height: "100%",
   },
 });
 

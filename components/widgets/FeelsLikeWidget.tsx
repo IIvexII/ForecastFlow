@@ -18,7 +18,7 @@ const FeelsLikeWidget: React.FC<FeelsLikeWidgetProps> = ({ feelsLikeTemp }) => {
             <Text style={{ color: "white", fontFamily: "SF-Semibold", fontSize: 40, lineHeight: 40 }}>
               {feelsLikeTemp}°
             </Text>
-            <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 16, lineHeight: 16 }}>
+            <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 12, lineHeight: 12 }}>
               Similar to the actual temperature
             </Text>
           </View>

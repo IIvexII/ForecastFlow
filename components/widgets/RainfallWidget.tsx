@@ -23,7 +23,7 @@ const RainfallWidget: React.FC<RainfallWidgetProps> = ({ currentRainfall, foreca
               in last hour
             </Text>
           </View>
-          <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 16, lineHeight: 16 }}>
+          <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 12, lineHeight: 12 }}>
             {forecastRainfall}mm in next 24 hours
           </Text>
         </Widget.Body>

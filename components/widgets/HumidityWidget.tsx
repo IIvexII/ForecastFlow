@@ -19,7 +19,7 @@ const HumidityWidget: React.FC<HumidityWidgetProps> = ({ humidity, dewPoint }) =
             <Text style={{ color: "white", fontFamily: "SF-Semibold", fontSize: 40, lineHeight: 40 }}>
               {humidity}%
             </Text>
-            <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 16, lineHeight: 16 }}>
+            <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 12, lineHeight: 12 }}>
               The dew point is {dewPoint} right now
             </Text>
           </View>

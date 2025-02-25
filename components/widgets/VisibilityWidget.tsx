@@ -25,7 +25,7 @@ const VisibilityWidget: React.FC<VisibilityWidgetProps> = ({ visibility }) => {
             <Text style={{ color: "white", fontFamily: "SF-Semibold", fontSize: 40, lineHeight: 40 }}>
               {visibility}km
             </Text>
-            <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 16, lineHeight: 16 }}>
+            <Text style={{ color: "#B2D3FF", fontFamily: "SF-Regular", fontSize: 12, lineHeight: 12 }}>
               {getVisibilityMessage(visibility)}
             </Text>
           </View>

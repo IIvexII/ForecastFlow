@@ -77,7 +77,7 @@ const SearchWeather = () => {
       )}
       {!isLoading && forecasts && forecasts.length > 0 && (
         <FlatList
-          style={{ paddingTop: 22 }}
+          style={{ paddingTop: 22, paddingHorizontal: 20 }}
           contentContainerStyle={{ gap: 40, paddingBottom: 60 }}
           data={forecasts}
           keyExtractor={(item) => item.id}

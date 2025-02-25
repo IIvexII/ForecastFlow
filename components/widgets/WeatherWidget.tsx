@@ -11,13 +11,17 @@ import { Canvas, FitBox, LinearGradient, Path, rect, Shadow, vec } from "@shopif
 
 import { Forecast } from "../../models/Weather";
 import { DEGREE_SYMBOL } from "../../utils/constants";
+import { useLayoutDimensions } from "../../hooks/useLayoutDimensions";
 
 type WeatherWidgetProps = {
   width: number;
   forecast: Forecast;
 };
 
-const WeatherWidget: React.FC<WeatherWidgetProps> = ({ width, forecast }) => {
+const WeatherWidget: React.FC<WeatherWidgetProps> = ({ forecast }) => {
+  const { width, handleLayout } = useLayoutDimensions();
+
+  // Shared Values
   const tiltWidget = useSharedValue(0);
   const weatherPosition = useSharedValue(0);
 
@@ -46,7 +50,7 @@ const WeatherWidget: React.FC<WeatherWidgetProps> = ({ width, forecast }) => {
   }));
 
   return (
-    <Pressable onPress={handleOnPress} style={styles.container}>
+    <Pressable onLayout={handleLayout} onPress={handleOnPress} style={styles.container}>
       {/* Widget Background Shape */}
       <Animated.View style={[styles.absoluteView, widgetBackgroundAnimatedStyle]}>
         <Canvas style={[styles.canvas, { width: width + 26 }]}>
@@ -87,7 +91,7 @@ const WeatherWidget: React.FC<WeatherWidgetProps> = ({ width, forecast }) => {
             {DEGREE_SYMBOL}
           </Text>
         </View>
-        <View style={[styles.locationWeatherContainer, { width: width - 140 }]}>
+        <View style={[styles.locationWeatherContainer]}>
           <Text style={[styles.text, styles.locationWeatherText]}>{forecast.location}</Text>
           <Text style={[styles.text, styles.locationWeatherText]}>{forecast.weather}</Text>
         </View>
@@ -120,16 +124,17 @@ const styles = StyleSheet.create({
     height: 228,
   },
   contentContainer: {
-    marginLeft: 80,
-    marginTop: 60,
+    marginLeft: "15%",
+    marginRight: "10%",
+    marginTop: "15%",
   },
   text: {
     fontFamily: "SF-Regular",
     color: "white",
   },
   temperatureText: {
-    fontSize: 60,
-    lineHeight: 60,
+    fontSize: 50,
+    lineHeight: 50,
   },
   highLowContainer: {
     flexDirection: "row",
@@ -147,10 +152,10 @@ const styles = StyleSheet.create({
   },
   weatherIcon: {
     position: "absolute",
-    top: -30,
+    top: 0,
     right: 0,
-    width: 250,
-    height: 200,
+    width: 150,
+    height: 150,
   },
 });
 

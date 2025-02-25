@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from "react";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useAnimatedReaction, useSharedValue } from "react-native-reanimated";
-import { ScrollView, StyleSheet, useWindowDimensions, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 // components
 import Seperator from "./elements/Seperator";
@@ -62,12 +63,12 @@ const ForecastSheet: React.FC = () => {
         <ForecastSheetBackground width={width} height={firstSnapPoint} cornerRadius={cornerRadius} />
       )}
     >
-      <BottomSheetView style={styles.bottomSheetView}>
+      <BottomSheetView style={styles.flex1}>
         <View>
           <ForecastControls />
         </View>
 
-        <ScrollView scrollEnabled contentContainerStyle={styles.scrollViewContent}>
+        <ScrollView scrollEnabled style={styles.flex1} contentContainerStyle={styles.scrollViewContent}>
           <AirQualityWidget airQualityIndex={current?.airQualiy || 0} />
           <View style={styles.row}>
             <UVIndexWidget uvIndex={current?.uv || 0} />
@@ -97,15 +98,14 @@ const styles = StyleSheet.create({
   container: {
     zIndex: 1,
   },
-  bottomSheetView: {
+  flex1: {
     flex: 1,
   },
+
   scrollViewContent: {
-    flex: 1,
     paddingHorizontal: 20,
   },
   row: {
-    // flex: 1,
     flexDirection: "row",
     gap: 5,
   },

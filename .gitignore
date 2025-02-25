@@ -8,6 +8,8 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+android/
+ios/
 
 # Native
 *.orig.*
@@ -38,3 +40,6 @@ yarn-error.*
 
 # package manager's lock file
 bun.lock*
+
+# build output
+eas-build/

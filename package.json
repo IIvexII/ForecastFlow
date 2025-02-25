@@ -6,7 +6,10 @@
     "start": "expo start -c",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build:dev": "eas build --profile development --platform android --local --output='./eas-build/development'",
+    "build:pre": "eas build --profile preview --platform android --local --output='./eas-build/preview'",
+    "mobile-server": "py -m http.server 8000"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.4",
@@ -17,6 +20,7 @@
     "@shopify/react-native-skia": "^1.11.7",
     "expo": "~52.0.33",
     "expo-blur": "^14.0.3",
+    "expo-dev-client": "~5.0.12",
     "expo-font": "^13.0.3",
     "expo-location": "^18.0.6",
     "expo-splash-screen": "^0.29.21",

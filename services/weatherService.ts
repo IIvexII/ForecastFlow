@@ -1,7 +1,7 @@
 import { CONDITION_ICON_MAP } from "../utils/constants";
 import { Forecast, ForecastType, Weather, WeatherType } from "../models/Weather";
 
-const BASE_URL = "http://api.weatherapi.com/v1";
+const BASE_URL = "https://api.weatherapi.com/v1";
 const API_KEY = process.env.EXPO_PUBLIC_WEATHER_API;
 
 export const fetchWeather = async (city: string) => {
@@ -99,7 +99,7 @@ export const searchWeather = async (query: string): Promise<Forecast[]> => {
           CONDITION_ICON_MAP[weatherData.current.condition.code] ||
           require("../assets/forecast/cloudy_large.png"), // Default icon
       };
-    }),
+    })
   );
 
   return forecasts;

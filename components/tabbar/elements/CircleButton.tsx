@@ -1,13 +1,6 @@
 import React from "react";
 import { Pressable, useWindowDimensions } from "react-native";
-import {
-  Canvas,
-  Circle,
-  LinearGradient,
-  Path,
-  Shadow,
-  vec,
-} from "@shopify/react-native-skia";
+import { Canvas, Circle, LinearGradient, Path, Shadow, vec } from "@shopify/react-native-skia";
 
 export default function CircleButton() {
   const { width } = useWindowDimensions();
@@ -17,8 +10,7 @@ export default function CircleButton() {
 
   return (
     <Pressable
-      className="absolute top-0"
-      style={{ left: width / 2 - 30, top: 12 }}
+      style={{ position: "absolute", left: width / 2 - 30, top: 12 }}
       onPress={() => console.log("Pressed")}
     >
       <Canvas style={{ width: 85, height: 85 }}>

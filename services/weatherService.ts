@@ -34,7 +34,7 @@ export const fetchWeather = async (city: string) => {
   };
 
   const weekly: Forecast[] = weatherData.forecast.forecastday.map((day: any, index: number) => ({
-    id: index.toString(), // Use index or generate a unique ID
+    id: weatherData.location.name,
     date: new Date(day.date),
     weather: day.day.condition.text as WeatherType, // Type assertion
     probability: day.day.daily_chance_of_rain || 0, // Provide a default value
@@ -49,7 +49,7 @@ export const fetchWeather = async (city: string) => {
   }));
 
   const hourly: Forecast[] = weatherData.forecast.forecastday[0].hour.map((hour: any, index: number) => ({
-    id: index.toString(), // Or generate a unique id
+    id: weatherData.location.name,
     date: new Date(hour.time),
     weather: hour.condition.text as WeatherType,
     probability: hour.chance_of_rain || 0, // Default value

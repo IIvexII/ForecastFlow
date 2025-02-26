@@ -2,9 +2,14 @@ import { CONDITION_ICON_MAP } from "../utils/constants";
 import { Forecast, ForecastType, Weather, WeatherType } from "../models/Weather";
 
 const BASE_URL = "https://api.weatherapi.com/v1";
+// @ts-ignore
+// because this will surely available in via expo environment
 const API_KEY = process.env.EXPO_PUBLIC_WEATHER_API;
 
 export const fetchWeather = async (city: string) => {
+  // don't go further if city is null/undefined
+  if (!city) return null;
+
   const weatherData = await (
     await fetch(`${BASE_URL}/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=yes`)
   ).json();
@@ -33,7 +38,7 @@ export const fetchWeather = async (city: string) => {
     visibility: weatherData.current.vis_km,
   };
 
-  const weekly: Forecast[] = weatherData.forecast.forecastday.map((day: any, index: number) => ({
+  const weekly: Forecast[] = weatherData.forecast.forecastday.map((day: any) => ({
     id: weatherData.location.name,
     date: new Date(day.date),
     weather: day.day.condition.text as WeatherType, // Type assertion
@@ -48,7 +53,7 @@ export const fetchWeather = async (city: string) => {
     humidity: day.day.avghumidity,
   }));
 
-  const hourly: Forecast[] = weatherData.forecast.forecastday[0].hour.map((hour: any, index: number) => ({
+  const hourly: Forecast[] = weatherData.forecast.forecastday[0].hour.map((hour: any) => ({
     id: weatherData.location.name,
     date: new Date(hour.time),
     weather: hour.condition.text as WeatherType,
@@ -65,7 +70,9 @@ export const fetchWeather = async (city: string) => {
   return { current, weekly, hourly };
 };
 
-export const searchWeather = async (query: string): Promise<Forecast[]> => {
+export const searchWeather = async (query: string): Promise<Forecast[] | null> => {
+  if (!query) return null;
+
   const places = await (
     await fetch(`https://api.weatherapi.com/v1/search.json?key=${API_KEY}&q=${query}`)
   ).json();

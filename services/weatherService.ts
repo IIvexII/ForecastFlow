@@ -89,6 +89,7 @@ export const searchWeather = async (query: string): Promise<Forecast[] | null> =
       }
 
       return {
+        id: weatherData.location.name,
         city: weatherData.location.name,
         temperature: Math.round(weatherData.current.temp_c),
         weather: weatherData.current.condition.text,

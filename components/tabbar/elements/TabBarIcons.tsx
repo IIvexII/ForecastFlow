@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
@@ -17,15 +17,17 @@ type TabBarIconsProps = {
 };
 
 const TabBarIcons = React.memo((props: TabBarIconsProps) => {
-  const { setWeatherData } = useWeather();
+  const { setWeatherData, weatherData } = useWeather();
   const [coordinates, setCoordinates] = React.useState<string>("");
   const navigation = useNavigation<NativeStackScreenProps<RootStackParamList>["navigation"]>();
 
   // this custom hook uses react query to fetch and cache
   // the api responses
-  const { data: weatherData } = useWeatherQuery(coordinates);
+  const { data } = useWeatherQuery(coordinates);
 
-  if (weatherData) setWeatherData(weatherData);
+  useEffect(() => {
+    if (data) setWeatherData(data);
+  }, [data]);
 
   const handleLocationPress = async () => {
     try {

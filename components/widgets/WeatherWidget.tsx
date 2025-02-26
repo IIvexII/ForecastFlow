@@ -1,12 +1,7 @@
 import React, { useCallback } from "react";
+import Animated, { withSpring } from "react-native-reanimated";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSpring,
-} from "react-native-reanimated";
+import { interpolate, useAnimatedStyle, useSharedValue, withRepeat } from "react-native-reanimated";
 import { Canvas, FitBox, LinearGradient, Path, rect, Shadow, vec } from "@shopify/react-native-skia";
 
 import { Forecast } from "../../models/Weather";

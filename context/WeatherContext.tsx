@@ -11,6 +11,8 @@ type WeatherData = {
 type WeatherContextType = {
   weatherData: WeatherData;
   setWeatherData: (data: WeatherData) => void;
+  isLoading: boolean;
+  setIsLoading: (state: boolean) => void;
 };
 
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
@@ -22,9 +24,12 @@ type WeatherProviderProps = {
 
 export const WeatherProvider: React.FC<WeatherProviderProps> = ({ children }) => {
   const [weatherData, setWeatherData] = useState<WeatherData>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <WeatherContext.Provider value={{ weatherData, setWeatherData }}>{children}</WeatherContext.Provider>
+    <WeatherContext.Provider value={{ weatherData, setWeatherData, isLoading, setIsLoading }}>
+      {children}
+    </WeatherContext.Provider>
   );
 };
 

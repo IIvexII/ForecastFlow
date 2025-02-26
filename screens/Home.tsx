@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomeBackground from "../components/HomeBackground";
 import ForecastSheet from "../components/sheet/ForecastSheet";
 import WeatherTabBar from "../components/tabbar/WeatherTabBar";
@@ -11,8 +11,10 @@ const Home: React.FC = () => {
   const { setWeatherData } = useWeather();
   const { data: weatherData } = useWeatherQuery("Lahore");
 
-  // only set global state when weather is not null
-  if (weatherData) setWeatherData(weatherData);
+  useEffect(() => {
+    // only set global state when weather is not null
+    if (weatherData) setWeatherData(weatherData);
+  }, [weatherData]);
 
   return (
     <BottomSheetPositionProvider>

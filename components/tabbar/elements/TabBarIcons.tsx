@@ -6,9 +6,10 @@ import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from "react-native"
 import MapIcon from "../icons/MapIcon";
 import ListIcon from "../icons/ListIcon";
 import TrapizoidBackground from "./TrapizoidBackground";
-import { getCurrentLocation } from "../../../services/locationService";
+
 import { useWeather } from "../../../context/WeatherContext";
-import { fetchWeather } from "../../../services/weatherService";
+import { useWeatherQuery } from "../../../hooks/useWeatherQuery";
+import { getCurrentLocation } from "../../../services/locationService";
 
 type TabBarIconsProps = {
   style?: StyleProp<ViewStyle>;
@@ -16,14 +17,20 @@ type TabBarIconsProps = {
 };
 
 const TabBarIcons = React.memo((props: TabBarIconsProps) => {
-  const navigation = useNavigation<NativeStackScreenProps<RootStackParamList>["navigation"]>();
   const { setWeatherData } = useWeather();
+  const [coordinates, setCoordinates] = React.useState<string>("");
+  const navigation = useNavigation<NativeStackScreenProps<RootStackParamList>["navigation"]>();
+
+  // this custom hook uses react query to fetch and cache
+  // the api responses
+  const { data: weatherData } = useWeatherQuery(coordinates);
+
+  if (weatherData) setWeatherData(weatherData);
 
   const handleLocationPress = async () => {
     try {
       const location = await getCurrentLocation();
-      const weather = await fetchWeather(`${location.latitude},${location.longitude}`);
-      setWeatherData(weather);
+      setCoordinates(`${location.latitude},${location.longitude}`);
     } catch (error) {
       console.error("Error getting current location:", error);
     }
@@ -53,7 +60,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 24, // px-6 converts to 24 in React Native
+    paddingHorizontal: 24,
   },
   icon: {
     marginTop: 26,

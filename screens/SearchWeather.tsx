@@ -1,42 +1,27 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { ActivityIndicator } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  useWindowDimensions,
-  View,
-} from "react-native";
 import { Canvas, LinearGradient, RoundedRect, Shadow, vec } from "@shopify/react-native-skia";
+import { FlatList, StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native";
 
 import Header from "../components/Header";
 import WeatherWidget from "../components/widgets/WeatherWidget";
 import GradientBackground from "../components/GradientBackground";
+
 import useDebounce from "../hooks/useDebounce";
-import { fetchWeather, searchWeather } from "../services/weatherService";
-import { Forecast } from "../models/Weather";
+import { searchWeather } from "../services/weatherService";
 
 const SearchWeather = () => {
   const { width } = useWindowDimensions();
   const [searchQuery, setSearchQuery] = React.useState("");
   const debouncedSearchQuery = useDebounce(searchQuery, 1000);
-  const [forecasts, setForecasts] = React.useState<Forecast[]>();
-  const [isLoading, setIsLoading] = React.useState(false);
 
-  useEffect(() => {
-    const fetchAsync = async (query: string) => {
-      setIsLoading(true);
-      const forecasts = await searchWeather(query);
-      setForecasts(forecasts);
-      setIsLoading(false);
-    };
-
-    if (debouncedSearchQuery) {
-      fetchAsync(debouncedSearchQuery);
-    }
-  }, [debouncedSearchQuery]);
+  // react-query setup for search
+  const { data: forecasts, isLoading } = useQuery({
+    queryKey: ["weather", debouncedSearchQuery],
+    queryFn: ({ queryKey }) => searchWeather(queryKey[1]),
+  });
 
   return (
     <View style={styles.container}>
@@ -46,7 +31,7 @@ const SearchWeather = () => {
       <Header title="Weather" />
 
       {/* search bar */}
-      <View style={[styles.searchBarContainer]}>
+      <View style={styles.searchBarContainer}>
         {/* Backgound Gradient */}
         <Canvas style={[styles.container, styles.searchBarBackground]}>
           <RoundedRect x={0} y={0} width={width - 40} height={40} r={30}>
@@ -60,80 +45,47 @@ const SearchWeather = () => {
         </Canvas>
 
         {/* Search Input */}
-        <View style={[styles.searchInputContainer]}>
-          <Ionicons name="search" size={24} color="white" style={[styles.searchIcon]} />
+        <View style={styles.searchInputContainer}>
+          <Ionicons name="search" size={24} color="white" style={styles.searchIcon} />
           <TextInput
             placeholder="Search for a city"
             placeholderTextColor="#BFBFBF"
             value={searchQuery}
             maxLength={168}
             onChange={(e) => setSearchQuery(e.nativeEvent.text)}
-            style={[styles.searchInput]}
+            style={styles.searchInput}
           />
         </View>
       </View>
+
       {isLoading && (
-        <ActivityIndicator size={"large"} color="white" animating={isLoading} style={{ flex: 1 }} />
+        <ActivityIndicator size="large" color="white" animating={isLoading} style={styles.loader} />
       )}
+
       {!isLoading && forecasts && forecasts.length > 0 && (
         <FlatList
-          style={{ paddingTop: 22, paddingHorizontal: 20 }}
-          contentContainerStyle={{ gap: 40, paddingBottom: 60 }}
+          style={styles.forecastList}
+          contentContainerStyle={styles.forecastListContent}
           data={forecasts}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <WeatherWidget width={width} forecast={item} />}
         />
       )}
-      {!isLoading &&
-        (forecasts === undefined || forecasts?.length === 0) &&
-        debouncedSearchQuery.length === 0 && (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <View style={{ alignItems: "center", marginTop: -80 }}>
-              <Ionicons name="search-outline" size={100} color="#C8C8C8" />
-              <Text
-                style={{
-                  color: "#C8C8C8",
-                  fontFamily: "SF-Regular",
-                  fontSize: 18,
-                  lineHeight: 30,
-                  textAlign: "center",
-                  width: 250,
-                }}
-              >
-                Start by typing a city name to check the weather!
-              </Text>
-            </View>
+
+      {!isLoading && (forecasts === null || forecasts?.length === 0) && debouncedSearchQuery.length === 0 && (
+        <View style={styles.messageContainer}>
+          <View style={styles.messageContent}>
+            <Ionicons name="search-outline" size={100} color="#C8C8C8" />
+            <Text style={styles.messageText}>Start by typing a city name to check the weather!</Text>
           </View>
-        )}
+        </View>
+      )}
 
       {!isLoading && debouncedSearchQuery.length > 0 && forecasts?.length === 0 && (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <View style={{ alignItems: "center", marginTop: -80 }}>
+        <View style={styles.messageContainer}>
+          <View style={styles.messageContent}>
             <Ionicons name="search-outline" size={100} color="#C8C8C8" />
-            <Text
-              style={{
-                color: "#C8C8C8",
-                fontFamily: "SF-Regular",
-                fontSize: 18,
-                lineHeight: 30,
-                textAlign: "center",
-                width: 250,
-              }}
-            >
-              No results found for "{debouncedSearchQuery}"
-            </Text>
+            <Text style={styles.messageText}>No results found for "{debouncedSearchQuery}"</Text>
           </View>
         </View>
       )}
@@ -170,6 +122,34 @@ const styles = StyleSheet.create({
   searchIcon: {
     position: "absolute",
     left: 10,
+  },
+  loader: {
+    flex: 1,
+  },
+  forecastList: {
+    paddingTop: 22,
+    paddingHorizontal: 20,
+  },
+  forecastListContent: {
+    gap: 40,
+    paddingBottom: 60,
+  },
+  messageContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  messageContent: {
+    alignItems: "center",
+    marginTop: -80,
+  },
+  messageText: {
+    color: "#C8C8C8",
+    fontFamily: "SF-Regular",
+    fontSize: 18,
+    lineHeight: 30,
+    textAlign: "center",
+    width: 250,
   },
 });
 

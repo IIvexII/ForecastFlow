@@ -4,21 +4,15 @@ import ForecastSheet from "../components/sheet/ForecastSheet";
 import WeatherTabBar from "../components/tabbar/WeatherTabBar";
 
 import { BottomSheetPositionProvider } from "../context/BottomSheetPosition";
+import { useWeatherQuery } from "../hooks/useWeatherQuery";
 import { useWeather } from "../context/WeatherContext";
-import { fetchWeather } from "../services/weatherService";
 
 const Home: React.FC = () => {
   const { setWeatherData } = useWeather();
+  const { data: weatherData } = useWeatherQuery("Lahore");
 
-  React.useEffect(() => {
-    const fetchWeatherData = async () => {
-      const weatherData = await fetchWeather("Lahore");
-
-      setWeatherData(weatherData);
-    };
-
-    fetchWeatherData();
-  }, [setWeatherData]);
+  // only set global state when weather is not null
+  if (weatherData) setWeatherData(weatherData);
 
   return (
     <BottomSheetPositionProvider>

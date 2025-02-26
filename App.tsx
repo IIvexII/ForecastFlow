@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -12,6 +13,18 @@ import { WeatherProvider } from "./context/WeatherContext";
 import "./styles/global.css";
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 30, // 30 minutes (cache-time)
+      retry: 2,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+    },
+  },
+});
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -27,16 +40,18 @@ const App: React.FC = () => {
   if (!fontsLoaded) return null;
 
   return (
-    <WeatherProvider>
-      <GestureHandlerRootView>
-        <SafeAreaProvider onLayout={onLayoutRootView}>
-          <NavigationContainer>
-            <RootNavigator />
-          </NavigationContainer>
-          <StatusBar style="light" />
-        </SafeAreaProvider>
-      </GestureHandlerRootView>
-    </WeatherProvider>
+    <QueryClientProvider client={queryClient}>
+      <WeatherProvider>
+        <GestureHandlerRootView>
+          <SafeAreaProvider onLayout={onLayoutRootView}>
+            <NavigationContainer>
+              <RootNavigator />
+            </NavigationContainer>
+            <StatusBar style="light" />
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </WeatherProvider>
+    </QueryClientProvider>
   );
 };
 

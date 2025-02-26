@@ -15,7 +15,7 @@ import { searchWeather } from "../services/weatherService";
 const SearchWeather = () => {
   const { width } = useWindowDimensions();
   const [searchQuery, setSearchQuery] = React.useState("");
-  const debouncedSearchQuery = useDebounce(searchQuery, 1000);
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   // react-query setup for search
   const { data: forecasts, isLoading } = useQuery({

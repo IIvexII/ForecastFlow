@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as SplashScreen from "expo-splash-screen";
+import { QueryClient } from "@tanstack/react-query";
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -11,6 +11,8 @@ import RootNavigator from "./navigators/RootNavigator";
 import { WeatherProvider } from "./context/WeatherContext";
 
 import "./styles/global.css";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import asyncStoragePersister from "./utils/persister";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -40,7 +42,7 @@ const App: React.FC = () => {
   if (!fontsLoaded) return null;
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider client={queryClient} persistOptions={{ persister: asyncStoragePersister }}>
       <WeatherProvider>
         <GestureHandlerRootView>
           <SafeAreaProvider onLayout={onLayoutRootView}>
@@ -51,7 +53,7 @@ const App: React.FC = () => {
           </SafeAreaProvider>
         </GestureHandlerRootView>
       </WeatherProvider>
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   );
 };
 

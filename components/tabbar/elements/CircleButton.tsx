@@ -8,7 +8,7 @@ import { fetchWeather } from "../../../services/weatherService";
 
 export default function CircleButton() {
   const { width } = useWindowDimensions();
-  const [modalVisible, setModalVisible] = React.useState(true);
+  const [modalVisible, setModalVisible] = React.useState(false);
   const { setWeatherData, setIsLoading } = useWeather();
 
   const TrapozoidLocation = 42;

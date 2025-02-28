@@ -19,7 +19,7 @@ const SearchWeather = () => {
 
   // react-query setup for search
   const { data: forecasts, isLoading } = useQuery({
-    queryKey: ["weather", debouncedSearchQuery],
+    queryKey: ["search-weather", debouncedSearchQuery],
     queryFn: ({ queryKey }) => searchWeather(queryKey[1]),
   });
 

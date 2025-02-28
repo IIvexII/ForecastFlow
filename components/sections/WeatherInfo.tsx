@@ -6,15 +6,16 @@ import { DEGREE_SYMBOL } from "../../utils/constants";
 import { StyleSheet } from "react-native";
 import { useBottomSheetPosition } from "../../context/BottomSheetPosition";
 import Animated, { Extrapolation, interpolate, useAnimatedStyle } from "react-native-reanimated";
+import WeatherInfoSkeleton from "./WeatherInfoSkeleton";
 
 interface WeatherInfoProps {
-  weather: Weather;
+  weather?: Weather;
+  isLoading: boolean;
 }
 
-const WeatherInfo: React.FC<WeatherInfoProps> = ({ weather }) => {
+const WeatherInfo: React.FC<WeatherInfoProps> = ({ weather, isLoading }) => {
   const { top } = useSafeAreaInsets();
   const bottomSheetPosition = useBottomSheetPosition();
-  const { city, condition, temperature, high, low } = weather;
 
   // animation
   // city text style
@@ -45,24 +46,34 @@ const WeatherInfo: React.FC<WeatherInfoProps> = ({ weather }) => {
     gap: 12,
   }));
 
+  if (!weather || isLoading) {
+    return <WeatherInfoSkeleton />;
+  }
+
   return (
     <View style={[styles.container, { top: top + 40 }]}>
       <View>
-        <Animated.Text style={[styles.cityText, animatedCityStyle]}>{city}</Animated.Text>
+        <Animated.Text style={[styles.cityText, animatedCityStyle]}>{weather?.city || ""}</Animated.Text>
 
         <Animated.View style={[animatedBottomInfoContainerStyle]}>
           {/* Temprature Text */}
           <Animated.Text style={[styles.temperatureText, animatedTempStyle]}>
-            {temperature}
+            {weather?.temperature || 0}
             {DEGREE_SYMBOL}
           </Animated.Text>
 
           {/* condition high low container */}
           <Animated.View>
-            <Animated.Text style={[styles.conditionText, animatedConditionStyle]}>{condition}</Animated.Text>
+            <Animated.Text style={[styles.conditionText, animatedConditionStyle]}>
+              {weather?.condition || ""}
+            </Animated.Text>
             <Animated.View style={[styles.highLowContainer]}>
-              <Animated.Text style={[styles.highLowText, animatedHighLowStyle]}>H:{high}°</Animated.Text>
-              <Animated.Text style={[styles.highLowText, animatedHighLowStyle]}>L:{low}°</Animated.Text>
+              <Animated.Text style={[styles.highLowText, animatedHighLowStyle]}>
+                H:{weather?.high}°
+              </Animated.Text>
+              <Animated.Text style={[styles.highLowText, animatedHighLowStyle]}>
+                L:{weather?.low}°
+              </Animated.Text>
             </Animated.View>
           </Animated.View>
         </Animated.View>

@@ -31,16 +31,14 @@ const ForecastSheet: React.FC = () => {
   } = useWeather();
 
   // bottom Sheet Configs
-  const snapPoints = ["40%", "80%"];
-  const firstSnapPoint = height * (parseFloat(snapPoints[0]) / 100);
-  const secondSnapPoint = height * (parseFloat(snapPoints[1]) / 100);
+  const snapPoints = useMemo(() => [height * 0.4, height * 0.8], [height]);
   const cornerRadius = 44;
 
   // animation
   const currentPosition = useSharedValue(0);
   const animatedPosition = useBottomSheetPosition(); // change value in context
-  const minValue = useMemo(() => (height - firstSnapPoint) * 0.978, [height]);
-  const maxValue = useMemo(() => (height - secondSnapPoint) * 0.978, [height]);
+  const minValue = useMemo(() => (height - snapPoints[0]) * 0.978, [height]);
+  const maxValue = useMemo(() => (height - snapPoints[1]) * 0.978, [height]);
 
   useAnimatedReaction(
     () => currentPosition.value,
@@ -49,7 +47,7 @@ const ForecastSheet: React.FC = () => {
 
       // update value in context
       animatedPosition.value = position;
-    },
+    }
   );
 
   return (
@@ -60,7 +58,7 @@ const ForecastSheet: React.FC = () => {
       handleIndicatorStyle={styles.handleIndicator}
       containerStyle={styles.container}
       backgroundComponent={() => (
-        <ForecastSheetBackground width={width} height={firstSnapPoint} cornerRadius={cornerRadius} />
+        <ForecastSheetBackground width={width} height={snapPoints[0]} cornerRadius={cornerRadius} />
       )}
     >
       <BottomSheetView style={styles.flex1}>

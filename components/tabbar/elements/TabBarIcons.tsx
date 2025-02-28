@@ -17,7 +17,7 @@ type TabBarIconsProps = {
 };
 
 const TabBarIcons = React.memo((props: TabBarIconsProps) => {
-  const { setWeatherData, weatherData } = useWeather();
+  const { setWeatherData, setIsLoading } = useWeather();
   const [coordinates, setCoordinates] = React.useState<string>("");
   const navigation = useNavigation<NativeStackScreenProps<RootStackParamList>["navigation"]>();
 
@@ -31,11 +31,14 @@ const TabBarIcons = React.memo((props: TabBarIconsProps) => {
 
   const handleLocationPress = async () => {
     try {
+      setIsLoading(true);
       const location = await getCurrentLocation();
       setCoordinates(`${location.latitude},${location.longitude}`);
     } catch (error) {
       console.error("Error getting current location:", error);
     }
+
+    setIsLoading(false);
   };
 
   return (

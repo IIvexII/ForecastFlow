@@ -19,7 +19,7 @@ const WeatherTabBar: React.FC = () => {
         translateY: interpolate(
           bottomSheetPosition.value,
           [0, 0.8],
-          [0, bottomSheetPosition.value * TAB_BAR_HEIGHT],
+          [0, bottomSheetPosition.value * TAB_BAR_HEIGHT]
         ),
       },
     ],

@@ -66,3 +66,20 @@ export const CONDITION_ICON_MAP: { [key: number]: ImageSourcePropType } = {
   1279: require("../assets/forecast/cloudy_large.png"), // Patchy light snow with thunder
   1282: require("../assets/forecast/tornado_large.png"), // Moderate or heavy snow with thunder
 };
+
+export const KEYWORD_MAPPINGS = [
+  { keyword: "blizzard", condition: "Blizzard" },
+  { keyword: "thunder", condition: "Thunder" },
+  { keyword: "snow", condition: "Snow" },
+  { keyword: "rain", condition: "Rain" },
+  { keyword: "drizzle", condition: "Drizzle" },
+  { keyword: "sleet", condition: "Sleet" },
+  { keyword: "fog", condition: "Fog" },
+  { keyword: "mist", condition: "Fog" },
+  { keyword: "cloud", condition: "Cloudy" },
+  { keyword: "overcast", condition: "Overcast" },
+  { keyword: "sunny", condition: "Sunny" },
+  { keyword: "clear", condition: "Clear" },
+  { keyword: "ice pellets", condition: "Ice" },
+  { keyword: "freezing rain", condition: "Ice" },
+];

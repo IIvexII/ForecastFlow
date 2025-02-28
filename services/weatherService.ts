@@ -113,3 +113,13 @@ export const searchWeather = async (query: string): Promise<Forecast[] | null> =
 
   return forecasts;
 };
+
+export const searchCity = async (query: string): Promise<Array<{ city: string; country: string }>> => {
+  if (!query) return [];
+
+  const places = await (
+    await fetch(`https://api.weatherapi.com/v1/search.json?key=${API_KEY}&q=${query}`)
+  ).json();
+
+  return places.map((place: any) => ({ city: place.name, country: place.country }));
+};

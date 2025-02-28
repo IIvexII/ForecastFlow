@@ -1,6 +1,7 @@
 import React from "react";
 import { useWindowDimensions } from "react-native";
 import { Canvas, FitBox, LinearGradient, Path, rect, vec } from "@shopify/react-native-skia";
+
 import CircleButton from "./CircleButton";
 
 export default function TrapizoidBackground() {

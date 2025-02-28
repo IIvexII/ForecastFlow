@@ -1,6 +1,7 @@
 import React from "react";
-import { Modal, Pressable, Text, useWindowDimensions, View } from "react-native";
+import { Pressable, useWindowDimensions } from "react-native";
 import { Canvas, Circle, LinearGradient, Path, Shadow, vec } from "@shopify/react-native-skia";
+
 import WeatherCityModal from "../../WeatherCityModel";
 import { useWeather } from "../../../context/WeatherContext";
 import { fetchWeather } from "../../../services/weatherService";

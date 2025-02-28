@@ -1,5 +1,6 @@
-import { CONDITION_ICON_MAP } from "../utils/constants";
 import { Forecast, ForecastType, Weather, WeatherType } from "../models/Weather";
+
+import { CONDITION_ICON_MAP } from "../utils/constants";
 import { getSingleWordCondition } from "../utils/weather";
 
 const BASE_URL = "https://api.weatherapi.com/v1";

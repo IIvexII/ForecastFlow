@@ -1,7 +1,6 @@
 import React from "react";
 import { Canvas, Line, vec } from "@shopify/react-native-skia";
 import { StyleProp, ViewStyle } from "react-native";
-import { styles } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetScrollable/BottomSheetFlashList";
 
 type SeperatorProps = {
   width: number;

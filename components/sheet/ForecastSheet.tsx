@@ -1,14 +1,12 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useAnimatedReaction, useSharedValue } from "react-native-reanimated";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 // components
-import Seperator from "./elements/Seperator";
 import ForecastControls from "./elements/ForecastControls";
 import ForecastSheetBackground from "./ForecastSheetBackground";
-import ForecastCapsuleList from "./elements/ForecastCapsuleList";
 
 // Widgets
 import UVIndexWidget from "../widgets/UVIndexWidget";

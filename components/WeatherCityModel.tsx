@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Modal, View, Text, TextInput, FlatList, TouchableOpacity, Dimensions, Image } from "react-native";
+import { Modal, View, Text, TextInput, FlatList, TouchableOpacity, Dimensions } from "react-native";
+
 import useDebounce from "../hooks/useDebounce";
-import { searchCity, searchWeather } from "../services/weatherService";
+import { searchCity } from "../services/weatherService";
 
 const { width } = Dimensions.get("window");
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { useWindowDimensions } from "react-native";
-import Animated, { interpolate, useAnimatedStyle } from "react-native-reanimated";
+import Animated, { Extrapolation, interpolate, useAnimatedStyle } from "react-native-reanimated";
 
 import TabBarButtons from "./elements/TabBarButtons";
 import ArcComponent from "./elements/ArcComponent";
@@ -25,7 +25,8 @@ const WeatherTabBar: React.FC<WeatherTabBarProps> = (props) => {
         translateY: interpolate(
           bottomSheetPosition.value,
           [0, 0.8],
-          [0, bottomSheetPosition.value * TAB_BAR_HEIGHT]
+          [0, bottomSheetPosition.value * 1.5 * TAB_BAR_HEIGHT],
+          Extrapolation.CLAMP
         ),
       },
     ],

@@ -2,9 +2,11 @@ import React from "react";
 import { useWindowDimensions } from "react-native";
 import { Canvas, FitBox, LinearGradient, Path, rect, vec } from "@shopify/react-native-skia";
 
-import CircleButton from "./CircleButton";
+type TrapizoidBackgroundProps = {
+  children?: React.ReactNode;
+};
 
-export default function TrapizoidBackground() {
+const TrapizoidBackground: React.FC<TrapizoidBackgroundProps> = (props) => {
   const { width } = useWindowDimensions();
 
   const TrapozoidWidth = width * 0.68;
@@ -28,7 +30,9 @@ export default function TrapizoidBackground() {
           </Path>
         </FitBox>
       </Canvas>
-      <CircleButton />
+      {props.children}
     </>
   );
-}
+};
+
+export default React.memo(TrapizoidBackground);

@@ -1,4 +1,5 @@
-import React, { useMemo } from "react";
+import { useCallback } from "react";
+import React, { useMemo, useEffect } from "react";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useAnimatedReaction, useSharedValue } from "react-native-reanimated";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
@@ -34,18 +35,33 @@ const ForecastSheet: React.FC = () => {
 
   // animation
   const currentPosition = useSharedValue(0);
-  const animatedPosition = useBottomSheetPosition(); // change value in context
-  const minValue = useMemo(() => (height - snapPoints[0]) * 0.978, [height]);
-  const maxValue = useMemo(() => (height - snapPoints[1]) * 0.978, [height]);
+  const animatedPosition = useBottomSheetPosition();
+  const minValue = useMemo(() => (height - snapPoints[0]) * 0.978, [height, snapPoints]);
+  const maxValue = useMemo(() => (height - snapPoints[1]) * 0.978, [height, snapPoints]);
+
+  useEffect(() => {
+    if (height > 0) {
+      currentPosition.value = height - snapPoints[0];
+    }
+  }, [height, snapPoints]);
+
+  const handleSheetChange = useCallback(
+    (index: number) => {
+      "worklet";
+      if (index === -1) {
+        currentPosition.value = height;
+      }
+    },
+    [height]
+  );
 
   useAnimatedReaction(
     () => currentPosition.value,
     (value) => {
       const position = normalizePostion(minValue, maxValue, value);
-
-      // update value in context
       animatedPosition.value = position;
-    }
+    },
+    [minValue, maxValue]
   );
 
   return (
@@ -53,6 +69,8 @@ const ForecastSheet: React.FC = () => {
       snapPoints={snapPoints}
       animatedPosition={currentPosition}
       index={0}
+      onChange={handleSheetChange}
+      enablePanDownToClose={false}
       handleIndicatorStyle={styles.handleIndicator}
       containerStyle={styles.container}
       backgroundComponent={() => (

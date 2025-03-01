@@ -3,13 +3,19 @@ import { StyleSheet } from "react-native";
 import { useWindowDimensions } from "react-native";
 import Animated, { interpolate, useAnimatedStyle } from "react-native-reanimated";
 
-import TabBarIcons from "./elements/TabBarIcons";
+import TabBarButtons from "./elements/TabBarButtons";
 import ArcComponent from "./elements/ArcComponent";
 import { useBottomSheetPosition } from "../../context/BottomSheetPosition";
 
 const TAB_BAR_HEIGHT = 100;
 
-const WeatherTabBar: React.FC = () => {
+type WeatherTabBarProps = {
+  onCurrentLocationPress: () => void;
+  onAddLocationPress: () => void;
+  onWeatherListPress: () => void;
+};
+
+const WeatherTabBar: React.FC<WeatherTabBarProps> = (props) => {
   const { width } = useWindowDimensions();
   const bottomSheetPosition = useBottomSheetPosition();
 
@@ -28,7 +34,7 @@ const WeatherTabBar: React.FC = () => {
   return (
     <Animated.View style={[styles.tabBar, tabBarAnimatedStyle]}>
       <ArcComponent width={width} height={TAB_BAR_HEIGHT} />
-      <TabBarIcons height={TAB_BAR_HEIGHT} />
+      <TabBarButtons height={TAB_BAR_HEIGHT} {...props} />
     </Animated.View>
   );
 };

@@ -1,21 +1,23 @@
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, useContext, ReactNode, useEffect } from "react";
 import { SharedValue, useSharedValue } from "react-native-reanimated";
 
-// Create the context
 const BottomSheetPositionContext = createContext<SharedValue<number> | undefined>(undefined);
 
-// Create the provider component
 export const BottomSheetPositionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const animationPostion = useSharedValue(0);
+  const animationPosition = useSharedValue(0);
+
+  useEffect(() => {
+    // ensure initial value is set
+    animationPosition.value = 0;
+  }, []);
 
   return (
-    <BottomSheetPositionContext.Provider value={animationPostion}>
+    <BottomSheetPositionContext.Provider value={animationPosition}>
       {children}
     </BottomSheetPositionContext.Provider>
   );
 };
 
-// Create a hook to use the BottomSheetPositionContext
 export const useBottomSheetPosition = () => {
   const context = useContext(BottomSheetPositionContext);
   if (context === undefined) {

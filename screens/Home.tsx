@@ -12,14 +12,13 @@ import useStoredData from "../hooks/useStoredCity";
 import { useWeatherQuery } from "../hooks/useWeatherQuery";
 
 import { useWeather } from "../context/WeatherContext";
-import { BottomSheetPositionProvider } from "../context/BottomSheetPosition";
 
 import { getCurrentLocation } from "../services/locationService";
 
 const Home: React.FC = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
 
-  const { setWeatherData, setIsLoading, isLoading } = useWeather();
+  const { setWeatherData, setIsLoading } = useWeather();
   const [location, setLocation] = useStoredData("location", "Lahore"); // local storage data
   const { data } = useWeatherQuery(location);
   const navigation = useNavigation<NativeStackScreenProps<RootStackParamList>["navigation"]>();
@@ -70,15 +69,13 @@ const Home: React.FC = () => {
           onSelected={onSelectedCity}
         />
       </View>
-      <BottomSheetPositionProvider>
-        <HomeBackground />
-        <ForecastSheet />
-        <WeatherTabBar
-          onCurrentLocationPress={handleCurrentLocation}
-          onAddLocationPress={handleAddLocation}
-          onWeatherListPress={handleWeatherList}
-        />
-      </BottomSheetPositionProvider>
+      <HomeBackground />
+      <ForecastSheet />
+      <WeatherTabBar
+        onCurrentLocationPress={handleCurrentLocation}
+        onAddLocationPress={handleAddLocation}
+        onWeatherListPress={handleWeatherList}
+      />
     </>
   );
 };

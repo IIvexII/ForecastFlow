@@ -4,11 +4,11 @@
     "slug": "forecast-flow",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon-dark.png",
+      "image": "./src/assets/splash-icon-dark.png",
       "resizeMode": "contain",
       "backgroundColor": "#3B1078"
     },
@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png"
+        "foregroundImage": "./src/assets/icon.png"
       },
       "permissions": [
         "ACCESS_BACKGROUND_LOCATION",
@@ -30,7 +30,7 @@
       "package": "com.zafeerhafeez.forecastflow"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./src/assets/favicon.png"
     },
     "plugins": [
       [

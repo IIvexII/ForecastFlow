@@ -14,6 +14,7 @@ import { useWeatherQuery } from "../hooks/useWeatherQuery";
 import { useWeather } from "../context/WeatherContext";
 
 import { getCurrentLocation } from "../services/locationService";
+import { BottomSheetPositionProvider } from "../context/BottomSheetPosition";
 
 const Home: React.FC = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -61,7 +62,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <BottomSheetPositionProvider>
       <View>
         <WeatherCityModal
           modalVisible={modalVisible}
@@ -76,7 +77,7 @@ const Home: React.FC = () => {
         onAddLocationPress={handleAddLocation}
         onWeatherListPress={handleWeatherList}
       />
-    </>
+    </BottomSheetPositionProvider>
   );
 };
 

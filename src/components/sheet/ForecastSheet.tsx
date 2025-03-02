@@ -74,12 +74,12 @@ const ForecastSheet: React.FC = () => {
       onChange={handleSheetChange}
       enablePanDownToClose={false}
       handleIndicatorStyle={styles.handleIndicator}
-      containerStyle={styles.container}
+      containerStyle={[styles.container]}
       backgroundComponent={() => (
         <ForecastSheetBackground width={width} height={snapPoints[0]} cornerRadius={cornerRadius} />
       )}
     >
-      <BottomSheetView style={styles.flex1}>
+      <BottomSheetView style={[styles.flex1, { maxHeight: snapPoints[1] - 20 }]}>
         <View>
           <ForecastControls />
         </View>
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
 
   scrollViewContent: {
     paddingHorizontal: 20,
+    paddingBottom: 40,
   },
   row: {
     flexDirection: "row",

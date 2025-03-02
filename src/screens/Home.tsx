@@ -3,6 +3,7 @@ import React, { useCallback, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
+import Loading from "../components/Loading";
 import HomeBackground from "../components/HomeBackground";
 import ForecastSheet from "../components/sheet/ForecastSheet";
 import WeatherCityModal from "../components/WeatherCityModel";
@@ -12,9 +13,9 @@ import useStoredData from "../hooks/useStoredCity";
 import { useWeatherQuery } from "../hooks/useWeatherQuery";
 
 import { useWeather } from "../context/WeatherContext";
+import { BottomSheetPositionProvider } from "../context/BottomSheetPosition";
 
 import { getCurrentLocation } from "../services/locationService";
-import { BottomSheetPositionProvider } from "../context/BottomSheetPosition";
 
 const Home: React.FC = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -60,6 +61,8 @@ const Home: React.FC = () => {
     }
     setIsLoading(false);
   }, []);
+
+  if (!data) return <Loading />;
 
   return (
     <BottomSheetPositionProvider>

@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import React, { useMemo, useEffect } from "react";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { useAnimatedReaction, useSharedValue } from "react-native-reanimated";
-import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { useAnimatedReaction, useSharedValue } from "react-native-reanimated";
 
 // components
 import ForecastControls from "./elements/ForecastControls";
@@ -20,8 +20,8 @@ import VisibilityWidget from "../widgets/VisibilityWidget";
 
 // miscs
 import { normalizePostion } from "../../utils/helpers";
-import { useBottomSheetPosition } from "../../context/BottomSheetPosition";
 import { useWeather } from "../../context/WeatherContext";
+import { useBottomSheetPosition } from "../../context/BottomSheetPosition";
 
 const ForecastSheet: React.FC = () => {
   const { width, height } = useWindowDimensions();
@@ -63,6 +63,8 @@ const ForecastSheet: React.FC = () => {
     },
     [minValue, maxValue]
   );
+
+  if (!current || !hourly) return null;
 
   return (
     <BottomSheet
